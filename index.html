@@ -6,17 +6,17 @@
 <title>Punjabi Connect | Punjabi creators meet brands</title><meta name="theme-color" content="#2B2F77"><meta property="og:title" content="Punjabi Connect"><meta property="og:description" content="Where Punjabi Creators Meet Great Brands">
 <meta name="description" content="Where Punjabi Creators Meet Great Brands">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Hind:wght@400;500;600&family=Anek+Gurmukhi:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{fontFamily:{display:['"Bricolage Grotesque"','sans-serif'],sans:['Hind','system-ui','sans-serif']},colors:{saffron:'#D9780A',indigo:'#2B2F77',ink:'#14161C',mist:'#F5F6F8',leaf:'#1F7A55'}}}}</script>
+<script>tailwind.config={theme:{extend:{fontFamily:{display:['"Bricolage Grotesque"','sans-serif'],sans:['Hind','system-ui','sans-serif']},colors:{saffron:'#D9780A',indigo:'#2B2F77',ink:'#14161C',mist:'#F5F6F8',leaf:'#1F7A55',paper:'#F4EFE6',paper2:'#FBF8F2',deep:'#1B1E55'}}}}</script>
 <style type="text/tailwindcss">
 @layer components{
- .input{@apply min-h-[42px] w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-sm transition outline-none focus:border-indigo focus:ring-2 focus:ring-indigo/20}
- .btn{@apply min-h-[40px] inline-flex items-center justify-center rounded-lg bg-indigo px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo/90 disabled:opacity-50}
- .btn2{@apply min-h-[40px] inline-flex items-center justify-center rounded-lg border border-black/15 bg-white px-4 py-2 text-sm font-medium hover:bg-mist}
- .card{@apply rounded-2xl border border-black/10 bg-white p-5 shadow-sm}
- .btn3{@apply inline-flex items-center justify-center rounded-lg bg-saffron px-4 py-2 text-sm font-medium text-white hover:bg-saffron/90}
- .chip{@apply inline-block rounded-full bg-indigo/5 px-2 py-0.5 text-xs text-indigo}
+ .input{@apply min-h-[44px] w-full border border-ink/70 bg-paper2 px-3 py-2 text-sm outline-none transition focus:border-saffron focus:ring-2 focus:ring-saffron/30}
+ .btn{@apply inline-flex min-h-[44px] items-center justify-center border border-ink bg-ink px-5 py-2 text-sm font-medium tracking-wide text-paper transition disabled:opacity-50}
+ .btn2{@apply inline-flex min-h-[44px] items-center justify-center border border-ink bg-transparent px-5 py-2 text-sm font-medium transition hover:bg-ink hover:text-paper}
+ .btn3{@apply inline-flex min-h-[44px] items-center justify-center border border-ink bg-saffron px-5 py-2 text-sm font-medium text-ink transition}
+ .card{@apply border border-ink/20 bg-paper2 p-5}
+ .chip{@apply inline-block border border-ink/30 px-2 py-0.5 text-[11px] uppercase tracking-wider}
  .lnk{@apply text-indigo underline underline-offset-2 hover:text-saffron}
 }
 html{scroll-behavior:smooth}
@@ -29,12 +29,28 @@ header{transition:box-shadow .25s ease}
 .g-tile{animation:tileIn 1s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i)*100ms + 150ms)}
 .g-line{display:block;height:3px;width:0;margin:14px auto 0;border-radius:2px;background:#D9780A;animation:lineGrow .9s cubic-bezier(.65,0,.35,1) .75s forwards}
 .g-glow{position:absolute;left:50%;top:30%;width:min(560px,120vw);height:min(560px,120vw);margin:calc(min(560px,120vw)/-2) 0 0 calc(min(560px,120vw)/-2);border-radius:50%;background:radial-gradient(closest-side,rgba(217,120,10,.2),transparent);animation:glow 1.6s cubic-bezier(.16,1,.3,1) both;pointer-events:none}
-.gp{position:absolute;top:0;bottom:0;width:50.2%;background:#fff;transition:transform .95s cubic-bezier(.76,0,.24,1)}
+.gp{position:absolute;top:0;bottom:0;width:50.2%;background:#F4EFE6;transition:transform .95s cubic-bezier(.76,0,.24,1)}
 .gl{left:0;border-right:3px solid #D9780A}.gr{right:0}
 #gate .gc{transition:opacity .45s ease,transform .6s cubic-bezier(.76,0,.24,1)}
 #gate.out .gl{transform:translateX(-101%)}#gate.out .gr{transform:translateX(101%)}
 #gate.out .gc{opacity:0;transform:translateY(-24px) scale(.98)}
 #gate .pat{transition:opacity .45s ease}#gate.out .pat{opacity:0!important}
+.display{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;letter-spacing:-.045em;line-height:.9}
+.gur{position:absolute;right:-1rem;top:.5rem;z-index:-1;font-family:"Anek Gurmukhi","Noto Sans Gurmukhi",sans-serif;font-weight:700;font-size:clamp(9rem,34vw,28rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(217,120,10,.45);pointer-events:none;user-select:none}
+.out{color:transparent;-webkit-text-stroke:1.5px var(--st,#14161C)}
+.phk{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/28px 28px}
+.dia{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+@keyframes diaIn{from{clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);transform:scale(.7) rotate(-14deg)}to{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);transform:none}}
+.dia-in{animation:diaIn 1.3s cubic-bezier(.16,1,.3,1) .3s both}
+@keyframes wr{to{transform:none}}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}.w>span{display:inline-block;transform:translateY(108%);animation:wr .95s cubic-bezier(.16,1,.3,1) calc(var(--i)*80ms + var(--b,0ms)) forwards}
+.rvt .w>span{animation-play-state:paused}.rvt.in .w>span{animation-play-state:running}
+@keyframes mq{to{transform:translateX(-50%)}}.mq{display:flex;width:max-content;animation:mq 38s linear infinite}
+.row{position:relative;isolation:isolate;transition:padding .45s cubic-bezier(.76,0,.24,1)}
+.row::before{content:"";position:absolute;inset:0;z-index:-1;background:#2B2F77;transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.76,0,.24,1)}
+.row:hover{padding-inline:1rem;color:#F4EFE6}.row:hover::before{transform:none}.row:hover *{color:inherit}.row:hover .acc{color:#F2A33C}
+.tk{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}.tk:hover{transform:translate(-4px,-4px);box-shadow:7px 7px 0 #D9780A}
+@media(min-width:768px){.step{margin-top:var(--o,0)}}
 #drawer{position:fixed;inset:0;z-index:65;visibility:hidden;transition:visibility 0s .3s}
 #drawer.open{visibility:visible;transition-delay:0s}
 .dov{position:absolute;inset:0;background:rgba(20,22,28,.5);opacity:0;transition:opacity .3s}
@@ -61,18 +77,21 @@ header{transition:box-shadow .25s ease}
 .hov{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
 .hov:hover{transform:translateY(-4px);box-shadow:0 14px 28px -14px rgba(43,47,119,.4);border-color:#D9780A}
 .btn,.btn2{transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
-.btn:hover{box-shadow:0 8px 18px -8px rgba(43,47,119,.6);transform:translateY(-1px)}.btn:active,.btn2:active{transform:scale(.96)}
+.btn,.btn3{position:relative;overflow:hidden;isolation:isolate}
+.btn::before,.btn3::before{content:"";position:absolute;inset:0;background:#D9780A;transform:translateY(101%);transition:transform .5s cubic-bezier(.76,0,.24,1);z-index:-1}.btn3::before{background:#14161C}
+.btn:hover::before,.btn3:hover::before{transform:none}.btn:hover{color:#14161C}.btn3:hover{color:#F4EFE6}.btn:active,.btn2:active{transform:scale(.96)}
 .sk{background:linear-gradient(90deg,#eceef2 25%,#f8f9fb 50%,#eceef2 75%);background-size:200% 100%;animation:shimmer 1.3s linear infinite}
 .toast-in{animation:toastIn .3s cubic-bezier(.2,.7,.2,1)}
 a,button{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid #D9780A;outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.rv2{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.rv2{opacity:1;transform:none}.w>span{transform:none!important}.dia-in{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}.mq{animation:none}}
 </style>
 </head>
-<body class="bg-white font-sans text-ink antialiased">
-<header class="sticky top-0 z-30 border-b border-black/10 bg-white/95 backdrop-blur"><div id="nav"></div></header>
+<body class="bg-paper font-sans text-ink antialiased">
+<header class="sticky top-0 z-30 border-b border-ink bg-paper/90 backdrop-blur"><div id="nav"></div></header>
 <main id="app" class="min-h-[70vh]"></main>
-<footer class="mt-20 bg-ink text-white/70"><div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4"><div class="md:col-span-2"><p class="font-display text-xl font-bold text-white">Punjabi<span class="text-saffron">Connect</span></p><p class="mt-2 max-w-sm text-sm">Where Punjabi creators meet great brands. Stats on profiles are self-reported and not verified.</p><p class="mt-3 text-sm"><a class="hover:text-white" href="mailto:workgamet992@gmail.com">workgamet992@gmail.com</a> · <a class="hover:text-white" href="tel:+919318911116">93189 11116</a></p></div><div class="space-y-2 text-sm"><p class="eyebrow">Explore</p><a class="block hover:text-white" href="#/creators">Creators</a><a class="block hover:text-white" href="#/campaigns">Campaigns</a><a class="block hover:text-white" href="#/how">How it works</a></div><div class="space-y-2 text-sm"><p class="eyebrow">Company</p><a class="block hover:text-white" href="#/about">About</a><a class="block hover:text-white" href="#/contact">Contact</a><a class="block hover:text-white" href="#/privacy">Privacy Policy</a><a class="block hover:text-white" href="#/terms">Terms</a></div></div><p class="border-t border-white/10 py-4 text-center text-xs">© Punjabi Connect</p>
+<footer class="mt-24 overflow-hidden bg-ink text-paper/70"><div class="mx-auto grid max-w-7xl gap-8 px-4 pt-14 md:grid-cols-4"><div class="md:col-span-2"><p class="font-display text-2xl font-bold text-paper">Where Punjabi creators meet great brands.</p><p class="mt-3 max-w-sm text-sm">Stats on profiles are self-reported and not verified.</p><p class="mt-3 text-sm"><a class="hover:text-saffron" href="mailto:workgamet992@gmail.com">workgamet992@gmail.com</a> · <a class="hover:text-saffron" href="tel:+919318911116">93189 11116</a></p></div><div class="space-y-2 text-sm"><p class="eyebrow">Explore</p><a class="block hover:text-saffron" href="#/creators">Creators</a><a class="block hover:text-saffron" href="#/campaigns">Campaigns</a><a class="block hover:text-saffron" href="#/how">How it works</a></div><div class="space-y-2 text-sm"><p class="eyebrow">Company</p><a class="block hover:text-saffron" href="#/about">About</a><a class="block hover:text-saffron" href="#/contact">Contact</a><a class="block hover:text-saffron" href="#/privacy">Privacy Policy</a><a class="block hover:text-saffron" href="#/terms">Terms</a></div></div>
+ <p class="out mt-10 select-none whitespace-nowrap px-4 font-display font-bold leading-[.8] tracking-tighter" style="--st:rgba(244,239,230,.28);font-size:clamp(3rem,13.5vw,12rem)">PunjabiConnect</p><p class="px-4 py-4 text-xs">© Punjabi Connect</p>
 </footer>
 <div id="toasts" class="fixed bottom-4 left-1/2 z-50 w-[92vw] max-w-sm -translate-x-1/2 space-y-2 text-center"></div>
 
@@ -111,12 +130,12 @@ function toast(msg, ok = true) {
 const spin = () => `<div class="mx-auto max-w-6xl px-4 py-10"><div class="sk h-8 w-56 rounded-lg"></div><div class="sk mt-3 h-4 w-80 max-w-full rounded"></div><div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${[1,2,3].map(() => '<div class="sk h-32 rounded-xl"></div>').join("")}</div></div>`;
 const empty = t => `<div class="card text-center text-sm text-ink/60">${t}</div>`;
 const wrap = (h, w = "max-w-6xl") => `<div class="mx-auto ${w} px-4 py-10">${h}</div>`;
-const badge = s => { const c = { pending: "bg-amber-100 text-amber-800", accepted: "bg-leaf/10 text-leaf", completed: "bg-leaf/10 text-leaf", rejected: "bg-red-50 text-red-600", suspended: "bg-red-50 text-red-600" }[s] || "bg-black/5"; return `<span class="rounded-full px-2 py-0.5 text-xs ${c}">${E(String(s).replace("_", " "))}</span>`; };
+const badge = s => { const c = { pending: "bg-amber-100 text-amber-800", accepted: "bg-leaf/10 text-leaf", completed: "bg-leaf/10 text-leaf", rejected: "bg-red-50 text-red-600", suspended: "bg-red-50 text-red-600" }[s] || "bg-black/5"; return `<span class="px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider ${c}">${E(String(s).replace("_", " "))}</span>`; };
 const opts = (a, sel, any) => (any ? `<option value="">${any}</option>` : "") + a.map(o => `<option ${o === sel ? "selected" : ""}>${o}</option>`).join("");
 const fld = (l, n, v = "", t = "text", x = "") => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><input class="input" name="${n}" type="${t}" value="${E(v)}" ${x}></label>`;
 const ta = (l, n, v = "", r = 3) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><textarea class="input" name="${n}" rows="${r}">${E(v)}</textarea></label>`;
 const sel = (l, n, a, v) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><select class="input" name="${n}">${opts(a, v)}</select></label>`;
-const tabs = (base, list, cur) => `<div class="mb-5 flex gap-2 overflow-x-auto">${list.map(t => `<a href="#${base}?tab=${t}" class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm capitalize ${t === cur ? "bg-indigo text-white" : "border border-black/10"}">${t}</a>`).join("")}</div>`;
+const tabs = (base, list, cur) => `<div class="mb-6 flex gap-6 overflow-x-auto border-b border-ink">${list.map(t => `<a href="#${base}?tab=${t}" class="whitespace-nowrap border-b-4 pb-2 text-sm uppercase tracking-wider ${t === cur ? "border-saffron font-semibold" : "border-transparent text-ink/60 hover:text-ink"}">${t}</a>`).join("")}</div>`;
 
 /* ---------- setup screen if config missing ---------- */
 if (firebaseConfig.apiKey.startsWith("PASTE")) {
@@ -147,7 +166,7 @@ const closeMenu = () => { $("#drawer")?.classList.remove("open"); document.query
 
 /* ---------- welcome gate ---------- */
 const gateSeen = () => { try { return sessionStorage.getItem("pcGate"); } catch { return "1"; } };
-const tile = (i, h) => `<div class="g-tile" style="--i:${i}"><div class="${i % 2 ? "float2" : "float"} relative w-16 overflow-hidden rounded-2xl bg-indigo shadow-lg sm:w-20 ${h}" style="animation-delay:${1000 + i * 250}ms"><div class="pat absolute inset-0 !opacity-40"></div><img data-hide src="photos/${i + 1}.jpg" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover"></div></div>`;
+const tile = (i, h) => `<div class="g-tile" style="--i:${i}"><div class="${i % 2 ? "float2" : "float"} relative w-16 overflow-hidden bg-indigo sm:w-20 ${h}" style="animation-delay:${1000 + i * 250}ms"><div class="pat absolute inset-0 !opacity-40"></div><img data-hide src="photos/${i + 1}.jpg" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover"></div></div>`;
 function showGate() {
   if (S.user || gateSeen() || $("#gate")) return;
   document.body.insertAdjacentHTML("beforeend", `<div id="gate" class="fixed inset-0 z-[70] overflow-hidden" role="dialog" aria-modal="true" aria-label="Welcome to Punjabi Connect"><div class="gp gl"></div><div class="gp gr"></div><div class="pat absolute inset-0"></div><div class="g-glow"></div>
@@ -170,44 +189,48 @@ function hideGate() {
 /* ---------- pages ---------- */
 const R = {};
 const av = (u, c = "h-12 w-12") => u && isUrl(u) ? `<img src="${href(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" class="${c} shrink-0 rounded-full object-cover">` : `<div class="${c} shrink-0 rounded-full bg-saffron/25"></div>`;
-const howHtml = `<div class="grid gap-px overflow-hidden rounded-2xl border border-black/10 bg-black/10 md:grid-cols-3">${[["Create your profile","Creators add their channels and rates. Brands describe their business."],["Post or apply","Brands publish campaigns. Creators apply with a proposal and a quoted price."],["Collaborate","Accepted applications become collaborations. Payments are handled outside the platform for now."]].map(([t, d], i) => `<div class="stag bg-white p-6"><p class="font-display text-6xl font-bold text-saffron/90">0${i + 1}</p><h3 class="mt-3 font-display text-xl">${t}</h3><p class="mt-1 text-sm text-ink/70">${d}</p></div>`).join("")}</div>`;
+const sp = (t, b = 0) => t.split(" ").map((w, i) => `<span class="w"><span style="--i:${i};--b:${b}ms">${E(w)}</span></span>`).join(" ");
+const howHtml = `<div class="grid md:grid-cols-3">${[["Create your profile","Creators add their channels and rates. Brands describe their business."],["Post or apply","Brands publish campaigns. Creators apply with a proposal and a quoted price."],["Collaborate","Accepted applications become collaborations. Payments are handled outside the platform for now."]].map(([t, d], i) => `<div class="stag step border-t border-current/30 py-6 md:border-l md:px-6 md:first:border-l-0" style="--o:${i * 3.5}rem"><p class="out font-display text-[7rem] font-bold leading-none" style="--st:currentColor">0${i + 1}</p><h3 class="mt-2 font-display text-2xl">${t}</h3><p class="mt-2 max-w-xs text-sm opacity-75">${d}</p></div>`).join("")}</div>`;
 
 R["/"] = async () => {
   let cr = [], ca = [];
-  try { cr = await rows("creatorProfiles", orderBy("subscribers", "desc"), limit(3)); ca = (await rows("campaigns", where("status", "==", "active"))).filter(c => !expired(c.deadline)).slice(0, 3); } catch {}
-  const w = h => `<div class="mx-auto max-w-6xl px-4">${h}</div>`;
-  const row = r => `<a href="#/creator?id=${E(r.id)}" class="flex items-center gap-3 rounded-xl bg-white/10 p-3 transition hover:bg-white/20">${av(r.photoUrl, "h-11 w-11")}<div class="min-w-0"><p class="truncate text-sm font-medium">${E(r.displayName)}</p><p class="truncate text-xs text-white/70">${E(r.category)}, ${E(r.language)}</p></div></a>`;
-  return `${w(`<section class="relative isolate grid items-center gap-10 py-10 md:grid-cols-5 md:py-20">
-    <div class="pat absolute inset-x-0 -top-6 -z-10 h-[125%]"></div>
-    <div class="md:col-span-3"><p class="hero-in eyebrow" style="--d:0ms">Creators. Brands. Punjab.</p>
-      <h1 class="hero-in mt-3 font-display text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" style="--d:80ms">Where Punjabi creators meet <span class="text-saffron">great brands</span></h1>
-      <p class="hero-in mt-6 max-w-lg text-lg text-ink/70" style="--d:200ms">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
-      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--d:320ms"><a class="btn3 !px-6 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn !px-6 !py-3" href="#/signup?role=brand">Join as Brand</a></div></div>
-    <div class="hero-in md:col-span-2" style="--d:300ms"><div class="float relative overflow-hidden rounded-3xl bg-indigo p-5 text-white shadow-2xl"><div class="pat absolute inset-0 !opacity-20"></div><div class="relative space-y-3"><p class="eyebrow">Featured creators</p>${cr.length ? cr.map(row).join("") : `<div class="rounded-xl border border-dashed border-white/30 p-4 text-sm text-white/80">Real creator profiles appear here as soon as creators join.</div>`}<div class="flex flex-wrap gap-2 pt-1">${["YouTube", "Instagram", "Brand campaigns"].map(t => `<span class="rounded-full bg-white/10 px-2.5 py-0.5 text-xs">${t}</span>`).join("")}</div></div></div></div>
-  </section>`)}
-  <div class="phulkari"></div>
-  ${w(`<section class="rv mt-14"><div class="flex items-end justify-between gap-3"><div><p class="eyebrow">Creators</p><h2 class="font-display text-3xl md:text-4xl">Featured Punjabi creators</h2></div><a class="lnk hidden text-sm sm:block" href="#/creators">See all</a></div><div class="mt-6 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
-  <section class="rv mt-16"><div class="flex items-end justify-between gap-3"><div><p class="eyebrow">Campaigns</p><h2 class="font-display text-3xl md:text-4xl">Latest brand campaigns</h2></div><a class="lnk hidden text-sm sm:block" href="#/campaigns">See all</a></div><div class="mt-6 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
-  <section class="rv mt-16"><p class="eyebrow">How it works</p><h2 class="mb-6 font-display text-3xl md:text-4xl">Three steps to a collaboration</h2>${howHtml}</section>`)}
-  <section class="rv mt-16 bg-indigo py-14 text-white"><div class="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2"><div><p class="eyebrow">For creators</p><ul class="mt-3 space-y-2 text-white/85"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div><p class="eyebrow">For brands</p><ul class="mt-3 space-y-2 text-white/85"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></div></section>
-  <section class="rv bg-saffron py-12 text-white"><div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4"><h2 class="font-display text-3xl">Ready to collaborate?</h2><div class="flex gap-3"><a class="btn2 !border-0" href="#/signup?role=creator">Join as Creator</a><a class="btn" href="#/signup?role=brand">Join as Brand</a></div></div></section>`;
+  try { cr = await rows("creatorProfiles", orderBy("subscribers", "desc"), limit(4)); ca = (await rows("campaigns", where("status", "==", "active"))).filter(c => !expired(c.deadline)).slice(0, 3); } catch {}
+  const f = cr[0], w = h => `<div class="mx-auto max-w-7xl px-4">${h}</div>`;
+  const head = (n, k, t) => `<div class="rvt mb-8 flex items-end justify-between gap-4 border-b border-ink pb-3"><div><p class="eyebrow">${n} / ${k}</p><h2 class="mt-2 font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">${sp(t)}</h2></div></div>`;
+  return `<section class="relative isolate overflow-hidden border-b border-ink"><p class="gur" aria-hidden="true">ਪੰਜਾਬੀ</p>
+   <div class="mx-auto grid max-w-7xl gap-6 px-4 pb-14 pt-10 md:grid-cols-12 md:pt-16">
+    <div class="md:col-span-8"><p class="eyebrow hero-in flex items-center gap-3"><span class="h-px w-10 bg-saffron"></span>Creators × Brands × Punjab</p>
+     <h1 class="display mt-5 text-[clamp(3rem,11vw,9rem)]">${sp("Where Punjabi creators meet", 100)} <span class="text-saffron">${sp("great brands.", 450)}</span></h1>
+     <p class="hero-in mt-8 max-w-md text-lg text-ink/75" style="--d:850ms">Punjabi YouTubers and Instagram creators, matched with businesses that want real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
+     <div class="hero-in mt-8 flex flex-wrap gap-3" style="--d:1000ms"><a class="btn3 !px-7 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn !px-7 !py-3" href="#/signup?role=brand">Join as Brand</a></div></div>
+    <div class="relative md:col-span-4"><div class="relative mx-auto mt-6 w-[min(80vw,22rem)] md:-ml-28 md:mt-8 md:w-[140%] md:max-w-none" style="transform:translateY(calc(var(--sy,0)*-.05px))">
+      <div class="dia dia-in relative aspect-square overflow-hidden bg-indigo"><div class="phk absolute inset-0 opacity-90"></div>${f && isUrl(f.photoUrl) ? `<img data-hide src="${href(f.photoUrl)}" alt="" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover">` : `<span class="absolute inset-0 grid place-items-center font-display text-8xl font-bold text-paper">ਪ</span>`}</div>
+      <div class="dia dia-in absolute -left-2 bottom-6 aspect-square w-1/3 bg-saffron" style="animation-delay:.6s"></div>
+      ${f ? `<a class="mt-3 block text-xs uppercase tracking-wider hover:text-saffron" href="#/creator?id=${E(f.id)}">Featured: <b>${E(f.displayName)}</b>, ${E(f.category)} →</a>` : `<p class="mt-3 text-xs uppercase tracking-wider text-ink/60">Your profile could be here</p>`}</div></div></div>
+   <div class="overflow-hidden border-t border-ink bg-ink py-3 text-paper"><div class="mq">${[...CATS, ...CATS].map(c => `<span class="px-6 font-display text-lg">${c}</span><span class="text-saffron">◆</span>`).join("")}</div></div></section>
+  <section class="rv mt-20">${w(head("01", "Creators", "Featured creators") + `<div class="grid border-t border-ink">${cr.length ? cr.map(creatorCard).join("") : empty("No creators yet. Be the first to join.")}</div><a class="btn2 mt-6" href="#/creators">See all creators</a>`)}</section>
+  <section class="mt-24 bg-deep py-16 text-paper" style="--st:#F4EFE6">${w(`<p class="eyebrow">02 / Process</p><h2 class="rvt mt-2 mb-8 font-display text-4xl font-bold leading-none tracking-tight md:text-6xl">${sp("Three steps. No middlemen.")}</h2>${howHtml}`)}</section>
+  <section class="rv mt-20">${w(head("03", "Campaigns", "Open briefs") + `<div class="grid gap-4">${ca.length ? ca.map(campCard).join("") : empty("No active campaigns yet.")}</div><a class="btn2 mt-6" href="#/campaigns">See all campaigns</a>`)}</section>
+  <section class="mt-24 grid md:grid-cols-2"><div class="rv bg-saffron p-8 text-ink md:p-14"><p class="eyebrow !text-ink">For creators</p><ul class="mt-4 space-y-3 font-display text-2xl leading-tight"><li>Get found by brands looking for Punjabi audiences.</li><li>Pick campaigns that fit your niche and price.</li><li>Track every application in one place.</li></ul></div><div class="rv bg-ink p-8 text-paper md:p-14"><p class="eyebrow">For brands</p><ul class="mt-4 space-y-3 font-display text-2xl leading-tight"><li>Reach creators by category, language and location.</li><li>Review proposals and quotes side by side.</li><li>Approve content links before you close the work.</li></ul></div></section>
+  <section class="rv">${w(`<div class="py-20 text-center"><h2 class="display text-[clamp(2.5rem,9vw,7rem)]">Let’s make something <span class="text-saffron">Punjabi.</span></h2><div class="mt-8 flex flex-wrap justify-center gap-3"><a class="btn3 !px-7 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn !px-7 !py-3" href="#/signup?role=brand">Join as Brand</a></div></div>`)}</section>`;
 };
-R["/how"] = async () => wrap(`<h1 class="font-display text-3xl">How It Works</h1><div class="mt-6">${howHtml}</div>`);
+R["/how"] = async () => wrap(`<h1 class="display text-6xl">How It Works</h1><div class="mt-6">${howHtml}</div>`);
 for (const [k, t, b] of [["about", "About", "Punjabi Connect connects Punjabi creators with brands. Payments are currently handled outside the platform."], ["contact", "Contact", "Add your contact email or phone here."], ["privacy", "Privacy Policy", "Draft placeholder. Have a lawyer write the final policy before launch. We never show private emails publicly."], ["terms", "Terms", "Draft placeholder. Have a lawyer write final terms before launch."]])
-  R["/" + k] = async () => wrap(`<h1 class="font-display text-3xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
+  R["/" + k] = async () => wrap(`<h1 class="display text-5xl md:text-7xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
 
-function creatorCard(r) {
-  return `<a href="#/creator?id=${E(r.id)}" class="card hov block"><div class="flex items-center gap-3">${av(r.photoUrl, "h-14 w-14")}<div class="min-w-0"><p class="truncate font-display text-lg leading-tight">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="truncate text-xs text-ink/60">${E(r.city)} ${E(r.state)}</p></div></div>
-  <div class="mt-3 flex flex-wrap gap-1.5"><span class="chip">${E(r.category)}</span><span class="chip">${E(r.language)}</span>${r.youtubeUrl ? '<span class="chip">YouTube</span>' : ""}${r.instagramUrl ? '<span class="chip">Instagram</span>' : ""}</div>
-  <div class="mt-4 grid grid-cols-3 gap-2 border-t border-black/10 pt-3 text-xs text-ink/60"><div><p class="text-sm font-semibold text-ink">${Number(r.subscribers || 0).toLocaleString("en-IN")}</p>audience</div><div><p class="text-sm font-semibold text-ink">${Number(r.avgViews || 0).toLocaleString("en-IN")}</p>avg views</div><div><p class="text-sm font-semibold text-saffron">${money(r.price)}</p>indicative</div></div></a>`;
+function creatorCard(r, i = 0) {
+  return `<a href="#/creator?id=${E(r.id)}" class="row grid grid-cols-[2rem_1fr_auto] items-center gap-x-4 border-b border-ink py-5 md:grid-cols-[3rem_5rem_1fr_auto_auto] md:gap-x-6"><span class="font-display text-sm text-ink/50">${String(i + 1).padStart(2, "0")}</span>
+  <span class="dia hidden aspect-square w-20 overflow-hidden bg-indigo md:block">${isUrl(r.photoUrl) ? `<img data-hide loading="lazy" referrerpolicy="no-referrer" src="${href(r.photoUrl)}" alt="" class="h-full w-full object-cover">` : '<span class="phk block h-full w-full"></span>'}</span>
+  <div class="min-w-0"><p class="truncate font-display text-3xl font-bold leading-none tracking-tight md:text-5xl">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="mt-1 truncate text-[11px] uppercase tracking-wider text-ink/60">${E(r.category)} · ${E(r.language)} · ${E(r.city)} ${E(r.state)}${r.youtubeUrl ? " · YouTube" : ""}${r.instagramUrl ? " · Instagram" : ""}</p><p class="mt-1 text-xs text-ink/60 md:hidden">${Number(r.subscribers || 0).toLocaleString("en-IN")} audience · ${Number(r.avgViews || 0).toLocaleString("en-IN")} views</p></div>
+  <div class="hidden text-right text-sm md:block"><p class="font-semibold">${Number(r.subscribers || 0).toLocaleString("en-IN")}</p><p class="text-xs text-ink/60">${Number(r.avgViews || 0).toLocaleString("en-IN")} avg views</p></div>
+  <div class="text-right"><p class="acc font-display text-xl font-bold text-saffron md:text-2xl">${money(r.price)}</p><p class="text-[10px] uppercase tracking-wider text-ink/50">indicative</p></div></a>`;
 }
 function campCard(c) {
   const ex = expired(c.deadline);
-  return `<a href="#/campaign?id=${E(c.id)}" class="card hov block"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="mt-0.5 font-display text-lg leading-snug">${E(c.title)}</h3>
-  <p class="mt-3 font-display text-3xl text-indigo">${money(c.budget)}</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="chip">${E(c.contentType)}</span><span class="chip">${E(c.category)}</span></div>
-  <p class="mt-3 text-sm text-ink/60">${E(c.location)} · <span class="${ex ? "text-red-600" : "font-medium text-ink"}">${ex ? "Closed " : "Apply by "}${fmtDate(c.deadline)}</span></p></a>`;
+  return `<a href="#/campaign?id=${E(c.id)}" class="tk grid border border-ink bg-paper2 md:grid-cols-[15rem_1fr_13rem]"><div class="flex items-end justify-between bg-indigo p-5 text-paper md:flex-col md:items-start"><p class="eyebrow">Budget</p><p class="font-display text-4xl font-bold leading-none md:mt-8">${money(c.budget)}</p></div>
+  <div class="min-w-0 p-5"><p class="text-[11px] uppercase tracking-wider text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="mt-1 font-display text-2xl font-bold leading-tight md:text-3xl">${E(c.title)}</h3><div class="mt-3 flex flex-wrap gap-1.5"><span class="chip">${E(c.contentType)}</span><span class="chip">${E(c.category)}</span><span class="chip">${E(c.location)}</span></div></div>
+  <div class="flex items-end justify-between border-t border-dashed border-ink/50 p-5 md:flex-col md:items-start md:border-l md:border-t-0"><div><p class="text-[10px] uppercase tracking-wider text-ink/50">${ex ? "Closed" : "Apply by"}</p><p class="font-semibold ${ex ? "text-red-600" : ""}">${fmtDate(c.deadline)}</p></div><span class="font-display text-lg text-saffron">${ex ? "" : "Apply →"}</span></div></a>`;
 }
-
 R["/contact"] = async () => wrap(`<p class="eyebrow">Contact</p><h1 class="font-display text-4xl">Talk to us</h1><p class="mt-2 text-ink/70">Questions about creators, campaigns or your account? Reach us directly.</p><div class="mt-6 grid gap-4 sm:grid-cols-2"><a class="card hov block" href="mailto:workgamet992@gmail.com"><p class="eyebrow">Email</p><p class="mt-1 break-all font-display text-lg">workgamet992@gmail.com</p></a><a class="card hov block" href="tel:+919318911116"><p class="eyebrow">Phone</p><p class="mt-1 font-display text-lg">93189 11116</p></a></div>`, "max-w-2xl");
 
 /* explore creators */
@@ -217,13 +240,13 @@ function creatorList() {
   const l = CR.filter(r => (!CF.category || r.category === CF.category) && (!CF.language || r.language === CF.language) && (!CF.platform || (CF.platform === "YouTube" ? r.youtubeUrl : r.instagramUrl)) && (!loc || `${r.city} ${r.state}`.toLowerCase().includes(loc)) && (!CF.aud || (+r.subscribers || 0) >= Number(CF.aud)))
     .sort((a, b) => CF.sort === "price" ? (+a.price || 0) - (+b.price || 0) : CF.sort === "views" ? (+b.avgViews || 0) - (+a.avgViews || 0) : (+b.subscribers || 0) - (+a.subscribers || 0));
   if (!l.length) return empty("No creators match these filters yet.");
-  return `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.slice(0, CF.n).map(creatorCard).join("")}</div>${CF.n < l.length ? `<div class="mt-6 text-center"><button class="btn2" data-act="more">Load more</button></div>` : ""}`;
+  return `<div class="grid border-t border-ink">${l.slice(0, CF.n).map(creatorCard).join("")}</div>${CF.n < l.length ? `<div class="mt-6 text-center"><button class="btn2" data-act="more">Load more</button></div>` : ""}`;
 }
 R["/creators"] = async () => {
   try { CR = await rows("creatorProfiles"); } catch { return wrap(empty("Could not load creators. Check your connection.")); }
   CF.n = 12;
-  return wrap(`<h1 class="font-display text-3xl">Explore Creators</h1><p class="text-sm text-ink/60">All stats are self-reported by creators and are not verified.</p>
-  <div class="my-5 grid gap-2 sm:grid-cols-3 lg:grid-cols-6">
+  return wrap(`<h1 class="display text-6xl md:text-8xl">Explore creators</h1><p class="mt-3 text-sm text-ink/60">All stats are self-reported by creators and are not verified.</p>
+  <div class="my-6 grid grid-cols-2 gap-3 border-y border-ink py-4 md:grid-cols-6">
    <select class="input" data-f="category" aria-label="Category">${opts(CATS, CF.category, "All categories")}</select><select class="input" data-f="language" aria-label="Language">${opts(LANGS, CF.language, "All languages")}</select>
    <select class="input" data-f="platform" aria-label="Platform">${opts(["YouTube", "Instagram"], CF.platform, "All platforms")}</select><input class="input" data-f="loc" aria-label="City or state" placeholder="City or state" value="${E(CF.loc)}">
    <input class="input" data-f="aud" aria-label="Minimum audience" type="number" min="0" placeholder="Min audience" value="${E(CF.aud)}">
@@ -233,21 +256,23 @@ R["/creators"] = async () => {
 R["/creator"] = async q => {
   let c; try { const s = await getDoc(doc(db, "creatorProfiles", q.get("id") || "x")); c = s.exists() ? s.data() : null; } catch {}
   if (!c) return wrap(empty("Creator not found."), "max-w-xl");
-  const lk = (u, t) => u ? `<a class="btn2" target="_blank" rel="noopener noreferrer" href="${href(u)}">${t}</a>` : "";
+  const lk = (u, t) => u ? `<a class="btn2" target="_blank" rel="noopener noreferrer" href="${href(u)}">${t} ↗</a>` : "";
   const cta = S.role === "brand" ? `<a class="btn3" href="#/dash?tab=campaigns">Post a campaign</a>` : !S.user ? `<a class="btn3" href="#/signup?role=brand">Join as Brand to work together</a>` : "";
-  return wrap(`<a class="lnk text-sm" href="#/creators">Back to creators</a><div class="card mt-3 space-y-5 !p-0 overflow-hidden"><div class="relative bg-indigo p-6 text-white md:p-8"><div class="pat absolute inset-0 !opacity-20"></div><div class="relative flex items-center gap-4">${av(c.photoUrl, "h-20 w-20 ring-4 ring-white/20")}<div class="min-w-0"><h1 class="font-display text-3xl leading-tight">${E(c.displayName)}${c.isDemo ? ' <span class="text-sm text-amber-300">DEMO</span>' : ""}</h1><p class="text-sm text-white/75">${E(c.city)} ${E(c.state)}</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="rounded-full bg-white/15 px-2 py-0.5 text-xs">${E(c.category)}</span><span class="rounded-full bg-white/15 px-2 py-0.5 text-xs">${E(c.language)}</span></div></div></div></div>
-  <div class="space-y-5 px-6 pb-6 md:px-8"><div class="grid grid-cols-3 gap-3 text-center">${[[Number(c.subscribers || 0).toLocaleString("en-IN"), "audience"], [Number(c.avgViews || 0).toLocaleString("en-IN"), "avg views"], [money(c.price), "indicative price"]].map(([v, l]) => `<div class="rounded-xl bg-mist p-3"><p class="font-display text-xl">${v}</p><p class="text-xs text-ink/60">${l}</p></div>`).join("")}</div>
-  <p class="text-xs text-ink/50">Audience and views are self-reported by the creator and not verified.</p>${c.bio ? `<p class="whitespace-pre-line">${E(c.bio)}</p>` : ""}${c.contactPref ? `<p class="text-sm"><span class="text-ink/60">Preferred contact:</span> ${E(c.contactPref)}</p>` : ""}
-  <div class="flex flex-wrap gap-2">${lk(c.youtubeUrl, "YouTube")}${lk(c.instagramUrl, "Instagram")}${(c.portfolio || []).map(p => lk(p, "Portfolio")).join("")}${cta}</div></div></div>`, "max-w-2xl");
+  return `<div class="mx-auto max-w-7xl px-4 py-8"><a class="text-xs uppercase tracking-wider hover:text-saffron" href="#/creators">← All creators</a>
+  <section class="mt-6 grid items-center gap-8 md:grid-cols-12"><div class="relative md:col-span-5"><div class="dia dia-in relative mx-auto aspect-square w-full max-w-md overflow-hidden bg-indigo"><div class="phk absolute inset-0"></div>${isUrl(c.photoUrl) ? `<img data-hide src="${href(c.photoUrl)}" alt="" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover">` : `<span class="absolute inset-0 grid place-items-center font-display text-8xl font-bold text-paper">${E((c.displayName || "P")[0])}</span>`}</div></div>
+  <div class="md:col-span-7"><p class="eyebrow">${E(c.category)} · ${E(c.language)}${c.isDemo ? " · DEMO" : ""}</p><h1 class="display mt-3 text-[clamp(2.75rem,8vw,6.5rem)]">${sp(c.displayName || "Creator")}</h1><p class="mt-3 text-sm uppercase tracking-wider text-ink/60">${E(c.city)} ${E(c.state)}</p>${c.bio ? `<p class="mt-5 max-w-lg whitespace-pre-line text-lg text-ink/80">${E(c.bio)}</p>` : ""}${c.contactPref ? `<p class="mt-3 text-sm"><span class="text-ink/60">Preferred contact:</span> ${E(c.contactPref)}</p>` : ""}</div></section>
+  <section class="rv mt-10 grid grid-cols-3 border-y border-ink">${[[Number(c.subscribers || 0).toLocaleString("en-IN"), "audience"], [Number(c.avgViews || 0).toLocaleString("en-IN"), "avg views"], [money(c.price), "indicative price"]].map(([v, l], i) => `<div class="p-4 md:p-8 ${i ? "border-l border-ink" : ""}"><p class="font-display text-2xl font-bold md:text-6xl ${i === 2 ? "text-saffron" : ""}">${v}</p><p class="mt-1 text-[11px] uppercase tracking-wider text-ink/60">${l}</p></div>`).join("")}</section>
+  <p class="mt-3 text-xs text-ink/50">Audience and views are self-reported by the creator and not verified.</p>
+  <div class="mt-6 flex flex-wrap gap-2">${lk(c.youtubeUrl, "YouTube")}${lk(c.instagramUrl, "Instagram")}${(c.portfolio || []).map(p => lk(p, "Portfolio")).join("")}${cta}</div></div>`;
 };
 
 /* campaigns */
 let CC = [];
 R["/campaigns"] = async () => {
   try { CC = await rows("campaigns", where("status", "==", "active")); } catch { return wrap(empty("Could not load campaigns.")); }
-  return wrap(`<h1 class="font-display text-3xl">Brand Campaigns</h1><div class="my-4 max-w-xs"><select class="input" data-f="ccat" aria-label="Category"><option value="">All categories</option>${opts(CATS)}</select></div><div id="cclist">${campList("")}</div>`);
+  return wrap(`<h1 class="display text-6xl md:text-8xl">Open campaigns</h1><div class="my-4 max-w-xs"><select class="input" data-f="ccat" aria-label="Category"><option value="">All categories</option>${opts(CATS)}</select></div><div id="cclist">${campList("")}</div>`);
 };
-const campList = cat => { const l = CC.filter(c => !cat || c.category === cat); return l.length ? `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.map(campCard).join("")}</div>` : empty("No active campaigns right now."); };
+const campList = cat => { const l = CC.filter(c => !cat || c.category === cat); return l.length ? `<div class="grid gap-4">${l.map(campCard).join("")}</div>` : empty("No active campaigns right now."); };
 R["/campaign"] = async q => {
   const id = q.get("id") || "x"; let c;
   try { const s = await getDoc(doc(db, "campaigns", id)); c = s.exists() ? { id: s.id, ...s.data() } : null; } catch {}
@@ -256,14 +281,14 @@ R["/campaign"] = async q => {
   if (S.role === "creator") try { applied = (await rows("applications", where("creatorId", "==", S.uid), where("campaignId", "==", id))).length > 0; } catch {}
   const box = c.status === "active" && expired(c.deadline) ? `<p class="text-sm text-red-600">The deadline has passed.</p>` : c.status !== "active" ? `<p class="text-sm text-red-600">This campaign is ${E(c.status)}.</p>` : !S.user ? `<a class="btn" href="#/login">Login to apply</a>` : S.role !== "creator" ? `<p class="text-sm text-ink/60">Only creator accounts can apply.</p>` : applied ? `<div class="card text-sm">You have applied. Track it in your dashboard.</div>` :
     `<form data-form="apply" data-id="${E(id)}" class="card space-y-3"><h2 class="font-medium">Apply to this campaign</h2>${ta("Short proposal (20+ characters)", "proposal", "", 4)}${fld("Your quoted price (₹)", "price", "", "number", 'min="1"')}<button class="btn">Send application</button></form>`;
-  return wrap(`<div class="space-y-4"><div class="card space-y-2"><p class="text-sm text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h1 class="font-display text-2xl">${E(c.title)}</h1><p>${E(c.description)}</p>
+  return wrap(`<div class="space-y-4"><div class="card space-y-2"><p class="text-sm text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h1 class="display text-4xl md:text-5xl">${E(c.title)}</h1><p>${E(c.description)}</p>
   <ul class="text-sm text-ink/70"><li>Budget: ${money(c.budget)}</li><li>Content: ${E(c.contentType)}</li><li>Creator category: ${E(c.category)}. Language: ${E(c.language)}</li><li>Location: ${E(c.location)}. Minimum audience: ${Number(c.minAudience || 0).toLocaleString("en-IN")}</li><li>Deliverables: ${E(c.deliverables)}</li><li>Deadline: ${fmtDate(c.deadline)}</li>${c.requirements ? `<li>Extra: ${E(c.requirements)}</li>` : ""}</ul></div>
   ${box}${S.user ? `<button class="text-xs text-ink/50 underline" data-act="report" data-id="${E(id)}">Report this campaign</button>` : ""}</div>`, "max-w-2xl");
 };
 
 /* auth */
 const pwf = (l, n, ac) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><span class="relative block"><input class="input pr-16" name="${n}" type="password" required autocomplete="${ac}"><button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-xs font-medium text-indigo" data-act="pw" aria-label="Show or hide password">Show</button></span></label>`;
-const authWrap = (t, sub, inner) => wrap(`<div class="mx-auto grid max-w-4xl overflow-hidden rounded-3xl border border-black/10 shadow-sm md:grid-cols-5"><div class="relative hidden bg-indigo p-8 text-white md:col-span-2 md:block"><div class="pat absolute inset-0 !opacity-25"></div><p class="relative font-display text-3xl leading-tight">Punjabi creators. Real brands.</p><p class="relative mt-3 text-sm text-white/75">Apply, collaborate and track everything in one place.</p></div><div class="p-6 md:col-span-3 md:p-10"><h1 class="font-display text-2xl">${t}</h1><p class="mb-5 text-sm text-ink/60">${sub}</p>${inner}</div></div>`, "max-w-5xl");
+const authWrap = (t, sub, inner) => wrap(`<div class="mx-auto grid max-w-4xl overflow-hidden border border-ink md:grid-cols-5"><div class="relative hidden overflow-hidden bg-deep p-8 text-white md:col-span-2 md:block"><div class="pat absolute inset-0 !opacity-25"></div><p class="gur !right-auto !left-2 !top-auto !bottom-0 !z-0 !text-[9rem]" aria-hidden="true">ਪੰ</p><p class="relative font-display text-3xl font-bold leading-tight">Punjabi creators. Real brands.</p><p class="relative mt-3 text-sm text-white/75">Apply, collaborate and track everything in one place.</p></div><div class="p-6 md:col-span-3 md:p-10"><h1 class="display text-4xl">${t}</h1><p class="mb-5 mt-2 text-sm text-ink/60">${sub}</p>${inner}</div></div>`, "max-w-5xl");
 R["/login"] = async () => authWrap("Welcome back", "Login to your dashboard.", `<form data-form="login" class="space-y-3">${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password", "password", "current-password")}<button class="btn w-full">Login</button><p class="text-center text-sm"><a class="lnk" href="#/forgot">Forgot password?</a> · <a class="lnk" href="#/signup">Create account</a></p></form>`);
 R["/signup"] = async q => { const r = q.get("role") === "brand" ? "brand" : "creator"; return authWrap("Create your account", "Free to join. Pick the account type that fits you.", `<form data-form="signup" class="space-y-3">
   <div class="grid grid-cols-2 gap-2">${["creator", "brand"].map(x => `<label class="cursor-pointer rounded-lg border p-2.5 text-center text-sm capitalize transition has-[:checked]:border-saffron has-[:checked]:bg-saffron/10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-saffron"><input class="sr-only" type="radio" name="role" value="${x}" ${x === r ? "checked" : ""}>${x}</label>`).join("")}</div>
@@ -292,7 +317,7 @@ async function creatorDash(q) {
     if (t === "collaborations") { const a = await rows("collaborations", where("creatorId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(c => `<div class="card space-y-2"><div class="flex justify-between"><p class="font-medium">${E(c.campaignTitle)}</p>${badge(c.status)}</div><p class="text-xs text-ink/60">Agreed ${money(c.agreedPrice)}. Payments are handled outside the platform for now.</p>${c.contentUrl ? `<a class="lnk text-sm" target="_blank" rel="noopener noreferrer" href="${href(c.contentUrl)}">Submitted content</a>` : ""}
         ${c.status !== "completed" ? `<div class="flex gap-2"><input class="input" id="cu-${E(c.id)}" placeholder="Published content URL"><button class="btn" data-act="submitContent" data-id="${E(c.id)}">Submit</button></div>` : ""}</div>`).join("")}</div>` : empty("No collaborations yet. They appear when a brand accepts your application."); }
   } catch { b = empty("Could not load this section."); }
-  return wrap(`<h1 class="font-display mb-1 text-2xl">Creator dashboard</h1><a class="lnk mb-4 block text-sm" href="#/campaigns">Browse campaigns</a>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
+  return wrap(`<h1 class="display mb-3 text-5xl md:text-7xl">Creator dashboard</h1><a class="lnk mb-4 block text-sm" href="#/campaigns">Browse campaigns</a>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
 }
 async function brandDash(q) {
   const t = q.get("tab") || "profile", T = ["profile", "campaigns", "applications", "collaborations"]; let b = "";
@@ -308,7 +333,7 @@ async function brandDash(q) {
     if (t === "collaborations") { const a = await rows("collaborations", where("brandId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(c => `<div class="card space-y-2"><div class="flex justify-between"><p class="font-medium">${E(c.creatorName)}: ${E(c.campaignTitle)}</p>${badge(c.status)}</div><p class="text-xs text-ink/60">Agreed ${money(c.agreedPrice)}. Payments are handled outside the platform for now.</p>${c.contentUrl ? `<a class="lnk text-sm" target="_blank" rel="noopener noreferrer" href="${href(c.contentUrl)}">Review submitted content</a>` : ""}
         ${c.status === "submitted" ? `<div class="flex gap-4 text-sm"><button class="lnk" data-act="collab" data-id="${E(c.id)}" data-v="completed">Mark completed</button><button class="lnk" data-act="collab" data-id="${E(c.id)}" data-v="in_progress">Request changes</button></div>` : ""}</div>`).join("")}</div>` : empty("No collaborations yet."); }
   } catch { b = empty("Could not load this section."); }
-  return wrap(`<h1 class="font-display mb-4 text-2xl">Brand dashboard</h1>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
+  return wrap(`<h1 class="display mb-5 text-5xl md:text-7xl">Brand dashboard</h1>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
 }
 
 /* admin (UI only; Firestore rules enforce access) */
@@ -322,17 +347,17 @@ R["/admin"] = async q => {
     else { const l = await rows(t); b = l.length ? `<div class="space-y-2">${l.map(r => `<div class="card flex flex-wrap items-center justify-between gap-2 text-sm"><div>${t === "users" ? `<p class="font-medium">${E(r.displayName)}, ${E(r.role)}</p><p class="text-ink/60">${E(r.email)}</p>` : t === "campaigns" ? `<p class="font-medium">${E(r.title)}</p><p class="text-ink/60">${E(r.brandName)}</p>` : `<p class="font-medium">${E(r.targetType)}: ${E(r.targetId)}</p><p class="text-ink/60">${E(r.reason)}</p>`}</div>
       <div class="flex items-center gap-3">${badge(r.status)}${t === "users" ? `<button class="lnk" data-act="admin" data-c="users" data-id="${E(r.id)}" data-v="${r.status === "active" ? "suspended" : "active"}">${r.status === "active" ? "Suspend" : "Restore"}</button>` : ""}${t === "campaigns" ? `<button class="lnk" data-act="admin" data-c="campaigns" data-id="${E(r.id)}" data-v="closed">Close</button><button class="lnk" data-act="admin" data-c="campaigns" data-id="${E(r.id)}" data-del="1">Delete</button>` : ""}${t === "reports" ? `<button class="lnk" data-act="admin" data-c="reports" data-id="${E(r.id)}" data-v="resolved">Resolve</button><button class="lnk" data-act="admin" data-c="reports" data-id="${E(r.id)}" data-del="1">Delete</button>` : ""}</div></div>`).join("")}</div>` : empty("Nothing here."); }
   } catch { b = empty("Could not load. Make sure your account is added to the admins collection."); }
-  return wrap(`<h1 class="font-display mb-4 text-2xl">Admin dashboard</h1>${tabs("/admin", T, t)}${b}`, "max-w-5xl");
+  return wrap(`<h1 class="display mb-5 text-5xl md:text-7xl">Admin dashboard</h1>${tabs("/admin", T, t)}${b}`, "max-w-5xl");
 };
 
 /* ---------- motion helpers ---------- */
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 }) : null;
 function fx(root = document) {
   root.querySelectorAll(".grid").forEach(g => [...g.children].filter(c => c.matches(".card,a,.stag") && !c.dataset.fx).forEach((c, i) => { c.dataset.fx = 1; c.classList.add("rv2"); c.style.setProperty("--d", Math.min(i, 8) * 70 + "ms"); io ? io.observe(c) : c.classList.add("in"); }));
-  root.querySelectorAll(".rv:not(.in)").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+  root.querySelectorAll(".rv:not(.in),.rvt:not(.in)").forEach(el => io ? io.observe(el) : el.classList.add("in"));
 }
 const bar = Object.assign(document.createElement("div"), { id: "prog" }); document.body.prepend(bar); let tk = false;
-addEventListener("scroll", () => { if (tk) return; tk = true; requestAnimationFrame(() => { const m = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${m > 0 ? Math.min(1, scrollY / m) : 0})`; $("header").classList.toggle("shadow-md", scrollY > 8); tk = false; }); }, { passive: true });
+addEventListener("scroll", () => { if (tk) return; tk = true; requestAnimationFrame(() => { const m = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${m > 0 ? Math.min(1, scrollY / m) : 0})`; $("header").classList.toggle("shadow-md", scrollY > 8); document.documentElement.style.setProperty("--sy", scrollY); tk = false; }); }, { passive: true });
 
 /* ---------- router ---------- */
 const go = p => { location.hash = "#" + p; return null; };
