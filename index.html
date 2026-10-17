@@ -22,6 +22,25 @@
 html{scroll-behavior:smooth}
 #prog{position:fixed;top:0;left:0;right:0;height:3px;background:#D9780A;transform:scaleX(0);transform-origin:left;z-index:60;pointer-events:none}
 header{transition:box-shadow .25s ease}
+@keyframes tileIn{from{opacity:0;transform:translateY(46px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes lineGrow{to{width:72px}}
+@keyframes glow{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes reveal{from{opacity:0;transform:translateY(14px) scale(1.015)}to{opacity:1;transform:none}}
+.g-tile{animation:tileIn 1s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i)*100ms + 150ms)}
+.g-line{display:block;height:3px;width:0;margin:14px auto 0;border-radius:2px;background:#D9780A;animation:lineGrow .9s cubic-bezier(.65,0,.35,1) .75s forwards}
+.g-glow{position:absolute;left:50%;top:30%;width:min(560px,120vw);height:min(560px,120vw);margin:calc(min(560px,120vw)/-2) 0 0 calc(min(560px,120vw)/-2);border-radius:50%;background:radial-gradient(closest-side,rgba(217,120,10,.2),transparent);animation:glow 1.6s cubic-bezier(.16,1,.3,1) both;pointer-events:none}
+.gp{position:absolute;top:0;bottom:0;width:50.2%;background:#fff;transition:transform .95s cubic-bezier(.76,0,.24,1)}
+.gl{left:0;border-right:3px solid #D9780A}.gr{right:0}
+#gate .gc{transition:opacity .45s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+#gate.out .gl{transform:translateX(-101%)}#gate.out .gr{transform:translateX(101%)}
+#gate.out .gc{opacity:0;transform:translateY(-24px) scale(.98)}
+#gate .pat{transition:opacity .45s ease}#gate.out .pat{opacity:0!important}
+#drawer{position:fixed;inset:0;z-index:65;visibility:hidden;transition:visibility 0s .3s}
+#drawer.open{visibility:visible;transition-delay:0s}
+.dov{position:absolute;inset:0;background:rgba(20,22,28,.5);opacity:0;transition:opacity .3s}
+.dpanel{position:absolute;left:0;top:0;bottom:0;width:min(20rem,86vw);background:#fff;transform:translateX(-100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);padding:1.25rem;overflow-y:auto;box-shadow:12px 0 40px -12px rgba(0,0,0,.3)}
+#drawer.open .dov{opacity:1}#drawer.open .dpanel{transform:none}
+.dpanel a.dl{display:block;border-radius:.6rem;padding:.65rem .75rem;font-size:.95rem}.dpanel a.dl:hover,.dpanel a.dl.on{background:#F5F6F8}
 #nav a.on{color:#14161C;font-weight:600;box-shadow:inset 0 -2px #D9780A}
 .rv2{opacity:0}.rv2.in{opacity:1;animation:rise .55s cubic-bezier(.2,.7,.2,1) var(--d,0ms) backwards}
 .eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#D9780A}body{overflow-x:hidden}img{max-width:100%}.menu{display:none}.menu.open{display:flex}
@@ -53,7 +72,7 @@ a,button{-webkit-tap-highlight-color:transparent}
 <body class="bg-white font-sans text-ink antialiased">
 <header class="sticky top-0 z-30 border-b border-black/10 bg-white/95 backdrop-blur"><div id="nav"></div></header>
 <main id="app" class="min-h-[70vh]"></main>
-<footer class="mt-20 bg-ink text-white/70"><div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4"><div class="md:col-span-2"><p class="font-display text-xl font-bold text-white">Punjabi<span class="text-saffron">Connect</span></p><p class="mt-2 max-w-sm text-sm">Where Punjabi creators meet great brands. Stats on profiles are self-reported and not verified.</p></div><div class="space-y-2 text-sm"><p class="eyebrow">Explore</p><a class="block hover:text-white" href="#/creators">Creators</a><a class="block hover:text-white" href="#/campaigns">Campaigns</a><a class="block hover:text-white" href="#/how">How it works</a></div><div class="space-y-2 text-sm"><p class="eyebrow">Company</p><a class="block hover:text-white" href="#/about">About</a><a class="block hover:text-white" href="#/contact">Contact</a><a class="block hover:text-white" href="#/privacy">Privacy Policy</a><a class="block hover:text-white" href="#/terms">Terms</a></div></div><p class="border-t border-white/10 py-4 text-center text-xs">© Punjabi Connect</p>
+<footer class="mt-20 bg-ink text-white/70"><div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4"><div class="md:col-span-2"><p class="font-display text-xl font-bold text-white">Punjabi<span class="text-saffron">Connect</span></p><p class="mt-2 max-w-sm text-sm">Where Punjabi creators meet great brands. Stats on profiles are self-reported and not verified.</p><p class="mt-3 text-sm"><a class="hover:text-white" href="mailto:workgamet992@gmail.com">workgamet992@gmail.com</a> · <a class="hover:text-white" href="tel:+919318911116">93189 11116</a></p></div><div class="space-y-2 text-sm"><p class="eyebrow">Explore</p><a class="block hover:text-white" href="#/creators">Creators</a><a class="block hover:text-white" href="#/campaigns">Campaigns</a><a class="block hover:text-white" href="#/how">How it works</a></div><div class="space-y-2 text-sm"><p class="eyebrow">Company</p><a class="block hover:text-white" href="#/about">About</a><a class="block hover:text-white" href="#/contact">Contact</a><a class="block hover:text-white" href="#/privacy">Privacy Policy</a><a class="block hover:text-white" href="#/terms">Terms</a></div></div><p class="border-t border-white/10 py-4 text-center text-xs">© Punjabi Connect</p>
 </footer>
 <div id="toasts" class="fixed bottom-4 left-1/2 z-50 w-[92vw] max-w-sm -translate-x-1/2 space-y-2 text-center"></div>
 
@@ -111,14 +130,41 @@ const rows = async (name, ...c) => (await getDocs(query(collection(db, name), ..
 /* ---------- navbar ---------- */
 function nav() {
   const l = "text-sm text-ink/70 hover:text-ink";
-  const links = `<a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a>`;
   const acct = S.user ? `<a class="${l}" href="#/dash">Dashboard</a>${S.admin ? `<a class="${l} font-medium !text-saffron" href="#/admin">Admin</a>` : ""}<button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`;
   $("#nav").innerHTML = `<div class="phulkari"></div><nav aria-label="Main" class="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3">
-   <a href="#/" class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></a>
-   <div class="hidden items-center gap-6 md:flex">${links}</div>
+   <div class="flex items-center gap-3"><button class="btn2 !px-2.5" data-act="menu" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg></button><a href="#/" class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></a></div>
+   <div class="hidden items-center gap-6 md:flex"><a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a></div>
    <div class="hidden items-center gap-3 md:flex">${acct}</div>
-   <button class="btn2 md:!hidden" data-act="menu" aria-expanded="false" aria-controls="mm" aria-label="Open menu">Menu</button></nav>
-   <div id="mm" class="menu flex-col gap-4 border-t border-black/10 bg-white px-4 py-4 md:hidden">${links}<hr class="border-black/10"><div class="flex flex-wrap items-center gap-3">${acct}</div></div>`;
+   ${S.user ? '<a class="btn md:hidden" href="#/dash">Dashboard</a>' : '<a class="btn md:hidden" href="#/login">Login</a>'}</nav>`;
+  let d = $("#drawer"); if (!d) { d = document.createElement("div"); d.id = "drawer"; document.body.append(d); }
+  const dl = (h, t) => `<a class="dl" href="${h}">${t}</a>`;
+  d.innerHTML = `<div class="dov" data-act="menu"></div><aside class="dpanel" aria-label="Menu"><div class="flex items-center justify-between"><p class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></p><button class="btn2 !px-3" data-act="menu" aria-label="Close menu">✕</button></div>
+   <nav class="mt-5 space-y-1">${dl("#/", "Home")}${dl("#/creators", "Explore Creators")}${dl("#/campaigns", "Brand Campaigns")}${dl("#/how", "How It Works")}${dl("#/about", "About")}${dl("#/contact", "Contact")}${S.user ? dl("#/dash", "Dashboard") + (S.admin ? dl("#/admin", "Admin") : "") : dl("#/login", "Login") + dl("#/signup", "Create account")}</nav>
+   ${S.user ? '<button class="btn2 mt-4 w-full" data-act="logout">Logout</button>' : ""}
+   <div class="mt-6 border-t border-black/10 pt-4 text-sm"><p class="eyebrow">Contact</p><a class="mt-2 block break-all text-indigo" href="mailto:workgamet992@gmail.com">workgamet992@gmail.com</a><a class="mt-1 block text-indigo" href="tel:+919318911116">93189 11116</a></div></aside>`;
+}
+const closeMenu = () => { $("#drawer")?.classList.remove("open"); document.querySelector('[data-act="menu"][aria-expanded]')?.setAttribute("aria-expanded", "false"); };
+
+/* ---------- welcome gate ---------- */
+const gateSeen = () => { try { return sessionStorage.getItem("pcGate"); } catch { return "1"; } };
+const tile = (i, h) => `<div class="g-tile" style="--i:${i}"><div class="${i % 2 ? "float2" : "float"} relative w-16 overflow-hidden rounded-2xl bg-indigo shadow-lg sm:w-20 ${h}" style="animation-delay:${1000 + i * 250}ms"><div class="pat absolute inset-0 !opacity-40"></div><img data-hide src="photos/${i + 1}.jpg" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover"></div></div>`;
+function showGate() {
+  if (S.user || gateSeen() || $("#gate")) return;
+  document.body.insertAdjacentHTML("beforeend", `<div id="gate" class="fixed inset-0 z-[70] overflow-hidden" role="dialog" aria-modal="true" aria-label="Welcome to Punjabi Connect"><div class="gp gl"></div><div class="gp gr"></div><div class="pat absolute inset-0"></div><div class="g-glow"></div>
+   <div class="gc relative z-10 mx-auto flex h-full max-w-md flex-col items-center justify-center overflow-y-auto px-6 py-10 text-center">
+   <div class="flex items-end justify-center gap-2">${["h-24", "h-32", "h-28", "h-32", "h-24"].map((h, i) => tile(i, h)).join("")}</div>
+   <p class="hero-in mt-8 font-display text-3xl font-bold" style="--d:650ms">Punjabi<span class="text-saffron">Connect</span></p><span class="g-line"></span>
+   <h1 class="hero-in mt-4 font-display text-2xl leading-tight" style="--d:850ms">Where Punjabi creators meet great brands</h1>
+   <p class="hero-in mt-2 text-sm text-ink/70" style="--d:1000ms">Login or create a free account to continue.</p>
+   <div class="hero-in mt-7 grid w-full gap-3" style="--d:1150ms"><button class="btn !py-3" data-act="gateLogin">Login</button><button class="btn3 !py-3" data-act="gateSignup">Create account</button><button class="mt-1 text-sm text-ink/60 underline" data-act="gateSkip">Just look around</button></div></div></div>`);
+  document.body.style.overflow = "hidden";
+}
+function hideGate() {
+  const g = $("#gate"); if (!g || g.classList.contains("out")) return;
+  try { sessionStorage.setItem("pcGate", "1"); } catch {}
+  g.classList.add("out"); g.style.pointerEvents = "none"; document.body.style.overflow = "";
+  const a = $("#app"); a.style.animation = "reveal 1s cubic-bezier(.16,1,.3,1) .25s both";
+  setTimeout(() => { g.remove(); a.style.animation = ""; }, 1100);
 }
 
 /* ---------- pages ---------- */
@@ -161,6 +207,8 @@ function campCard(c) {
   <p class="mt-3 font-display text-3xl text-indigo">${money(c.budget)}</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="chip">${E(c.contentType)}</span><span class="chip">${E(c.category)}</span></div>
   <p class="mt-3 text-sm text-ink/60">${E(c.location)} · <span class="${ex ? "text-red-600" : "font-medium text-ink"}">${ex ? "Closed " : "Apply by "}${fmtDate(c.deadline)}</span></p></a>`;
 }
+
+R["/contact"] = async () => wrap(`<p class="eyebrow">Contact</p><h1 class="font-display text-4xl">Talk to us</h1><p class="mt-2 text-ink/70">Questions about creators, campaigns or your account? Reach us directly.</p><div class="mt-6 grid gap-4 sm:grid-cols-2"><a class="card hov block" href="mailto:workgamet992@gmail.com"><p class="eyebrow">Email</p><p class="mt-1 break-all font-display text-lg">workgamet992@gmail.com</p></a><a class="card hov block" href="tel:+919318911116"><p class="eyebrow">Phone</p><p class="mt-1 font-display text-lg">93189 11116</p></a></div>`, "max-w-2xl");
 
 /* explore creators */
 let CR = []; const CF = { category: "", language: "", platform: "", loc: "", aud: "", sort: "audience", n: 12 };
@@ -295,9 +343,10 @@ async function route() {
   if (!S.ready) { $("#app").innerHTML = spin(); return; }
   const [path, qs] = (location.hash.slice(1) || "/").split("?"); const q = new URLSearchParams(qs || "");
   $("#app").innerHTML = spin();
-  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (my !== RT) return; document.querySelectorAll("#nav a[href^=\"#/\"]").forEach(a => a.classList.toggle("on", a.getAttribute("href").split("?")[0] === path)); document.title = (TT[path] ? TT[path] + " | " : "") + "Punjabi Connect"; if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); fx($("#app")); } } catch (e) { if (my === RT) $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
+  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (my !== RT) return; document.querySelectorAll("#nav a[href^=\"#/\"], #drawer a[href^=\"#/\"]").forEach(a => a.classList.toggle("on", a.getAttribute("href").split("?")[0] === path)); document.title = (TT[path] ? TT[path] + " | " : "") + "Punjabi Connect"; if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); fx($("#app")); } } catch (e) { if (my === RT) $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
 }
 addEventListener("hashchange", route);
+addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 onAuthStateChanged(auth, async u => {
   if (S.busy) { S.user = u; S.uid = u?.uid || null; return; }
   if (!u || S.uid !== u.uid) { S.role = null; S.admin = false; }
@@ -306,7 +355,7 @@ onAuthStateChanged(auth, async u => {
     try { const r = (await getDoc(doc(db, "users", u.uid))).data()?.role; if (r) S.role = r; } catch {}
     try { S.admin = (await getDoc(doc(db, "admins", u.uid))).exists(); } catch {}
   }
-  S.ready = true; nav(); route();
+  S.ready = true; nav(); if (u) hideGate(); else showGate(); route();
 });
 
 /* ---------- events ---------- */
@@ -370,10 +419,11 @@ document.addEventListener("input", e => {
   CF[k] = e.target.value; CF.n = 12; clearTimeout(DB); DB = setTimeout(() => { $("#clist").innerHTML = creatorList(); fx($("#clist")); }, 150);
 });
 let DB;
-addEventListener("error", e => { const i = e.target; if (i?.tagName === "IMG" && !i.dataset.x) { i.dataset.x = 1; i.replaceWith(Object.assign(document.createElement("div"), { className: "h-12 w-12 shrink-0 rounded-full bg-saffron/20" })); } }, true);
+addEventListener("error", e => { const i = e.target; if (i?.tagName === "IMG" && !i.dataset.x) { i.dataset.x = 1; if (i.dataset.hide) { i.style.display = "none"; return; } i.replaceWith(Object.assign(document.createElement("div"), { className: "h-12 w-12 shrink-0 rounded-full bg-saffron/20" })); } }, true);
 const A = {
+  menu: () => { const d = $("#drawer"), o = d.classList.toggle("open"); document.querySelector('[data-act="menu"][aria-expanded]')?.setAttribute("aria-expanded", o); },
+  gateLogin: () => { hideGate(); go("/login"); }, gateSignup: () => { hideGate(); go("/signup"); }, gateSkip: () => hideGate(),
   pw: el => { const i = el.previousElementSibling, h = i.type === "password"; i.type = h ? "text" : "password"; el.textContent = h ? "Hide" : "Show"; },
-  menu: el => { const m = $("#mm"), o = m.classList.toggle("open"); el.setAttribute("aria-expanded", o); el.textContent = o ? "Close" : "Menu"; },
   logout: async () => { await signOut(auth); go("/"); },
   more: () => { CF.n += 12; $("#clist").innerHTML = creatorList(); fx($("#clist")); },
   async setStatus(el) { await updateDoc(doc(db, "campaigns", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast(el.dataset.v === "active" ? "Published." : "Closed."); route(); },
@@ -388,7 +438,7 @@ const A = {
   async report(el) { const r = prompt("Why are you reporting this campaign?"); if (!r?.trim()) return; await addDoc(collection(db, "reports"), { reporterId: S.uid, targetType: "campaign", targetId: el.dataset.id, reason: r.trim().slice(0, 500), status: "open", createdAt: serverTimestamp() }); toast("Report sent to admins."); },
   async admin(el) { const { c, id, v, del } = el.dataset; if (del) { if (!confirm("Delete this permanently?")) return; await deleteDoc(doc(db, c, id)); } else await updateDoc(doc(db, c, id), { status: v }); toast("Done."); route(); },
 };
-document.addEventListener("click", async e => { if (e.target.closest("#mm a")) $("#mm").classList.remove("open"); const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
+document.addEventListener("click", async e => { if (e.target.closest("#drawer a, #drawer [data-act=logout]")) closeMenu(); const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
 </script>
 </body>
 </html>
