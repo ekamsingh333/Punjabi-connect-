@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Punjabi Connect</title>
+<title>Punjabi Connect | Punjabi creators meet brands</title><meta name="theme-color" content="#2B2F77"><meta property="og:title" content="Punjabi Connect"><meta property="og:description" content="Where Punjabi Creators Meet Great Brands">
 <meta name="description" content="Where Punjabi Creators Meet Great Brands">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,13 +11,20 @@
 <script>tailwind.config={theme:{extend:{fontFamily:{display:['"Bricolage Grotesque"','sans-serif'],sans:['Hind','system-ui','sans-serif']},colors:{saffron:'#D9780A',indigo:'#2B2F77',ink:'#14161C',mist:'#F5F6F8',leaf:'#1F7A55'}}}}</script>
 <style type="text/tailwindcss">
 @layer components{
- .input{@apply w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-indigo focus:ring-2 focus:ring-indigo/20}
- .btn{@apply inline-flex items-center justify-center rounded-lg bg-indigo px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo/90 disabled:opacity-50}
- .btn2{@apply inline-flex items-center justify-center rounded-lg border border-black/15 bg-white px-4 py-2 text-sm font-medium hover:bg-mist}
- .card{@apply rounded-xl border border-black/10 bg-white p-5}
+ .input{@apply min-h-[42px] w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-sm transition outline-none focus:border-indigo focus:ring-2 focus:ring-indigo/20}
+ .btn{@apply min-h-[40px] inline-flex items-center justify-center rounded-lg bg-indigo px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo/90 disabled:opacity-50}
+ .btn2{@apply min-h-[40px] inline-flex items-center justify-center rounded-lg border border-black/15 bg-white px-4 py-2 text-sm font-medium hover:bg-mist}
+ .card{@apply rounded-2xl border border-black/10 bg-white p-5 shadow-sm}
+ .btn3{@apply inline-flex items-center justify-center rounded-lg bg-saffron px-4 py-2 text-sm font-medium text-white hover:bg-saffron/90}
+ .chip{@apply inline-block rounded-full bg-indigo/5 px-2 py-0.5 text-xs text-indigo}
  .lnk{@apply text-indigo underline underline-offset-2 hover:text-saffron}
 }
 html{scroll-behavior:smooth}
+#prog{position:fixed;top:0;left:0;right:0;height:3px;background:#D9780A;transform:scaleX(0);transform-origin:left;z-index:60;pointer-events:none}
+header{transition:box-shadow .25s ease}
+#nav a.on{color:#14161C;font-weight:600;box-shadow:inset 0 -2px #D9780A}
+.rv2{opacity:0}.rv2.in{opacity:1;animation:rise .55s cubic-bezier(.2,.7,.2,1) var(--d,0ms) backwards}
+.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#D9780A}body{overflow-x:hidden}img{max-width:100%}.menu{display:none}.menu.open{display:flex}
 .phulkari{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/14px 14px;height:10px;animation:drift 5s linear infinite}
 .pat{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/36px 36px;opacity:.08;animation:drift2 40s linear infinite;-webkit-mask-image:radial-gradient(ellipse at 75% 35%,#000 0,transparent 65%);mask-image:radial-gradient(ellipse at 75% 35%,#000 0,transparent 65%)}
 @keyframes drift{to{background-position:14px 0}}
@@ -40,17 +47,15 @@ html{scroll-behavior:smooth}
 .toast-in{animation:toastIn .3s cubic-bezier(.2,.7,.2,1)}
 a,button{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid #D9780A;outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.rv2{opacity:1;transform:none}}
 </style>
 </head>
 <body class="bg-white font-sans text-ink antialiased">
 <header class="sticky top-0 z-30 border-b border-black/10 bg-white/95 backdrop-blur"><div id="nav"></div></header>
 <main id="app" class="min-h-[70vh]"></main>
-<footer class="mt-20 border-t border-black/10 py-8 text-center text-sm text-ink/60">
- <div class="flex flex-wrap justify-center gap-5"><a href="#/about">About</a><a href="#/contact">Contact</a><a href="#/privacy">Privacy Policy</a><a href="#/terms">Terms</a></div>
- <p class="mt-3">© Punjabi Connect</p>
+<footer class="mt-20 bg-ink text-white/70"><div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4"><div class="md:col-span-2"><p class="font-display text-xl font-bold text-white">Punjabi<span class="text-saffron">Connect</span></p><p class="mt-2 max-w-sm text-sm">Where Punjabi creators meet great brands. Stats on profiles are self-reported and not verified.</p></div><div class="space-y-2 text-sm"><p class="eyebrow">Explore</p><a class="block hover:text-white" href="#/creators">Creators</a><a class="block hover:text-white" href="#/campaigns">Campaigns</a><a class="block hover:text-white" href="#/how">How it works</a></div><div class="space-y-2 text-sm"><p class="eyebrow">Company</p><a class="block hover:text-white" href="#/about">About</a><a class="block hover:text-white" href="#/contact">Contact</a><a class="block hover:text-white" href="#/privacy">Privacy Policy</a><a class="block hover:text-white" href="#/terms">Terms</a></div></div><p class="border-t border-white/10 py-4 text-center text-xs">© Punjabi Connect</p>
 </footer>
-<div id="toasts" class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 space-y-2"></div>
+<div id="toasts" class="fixed bottom-4 left-1/2 z-50 w-[92vw] max-w-sm -translate-x-1/2 space-y-2 text-center"></div>
 
 <script type="module">
 /* ============ 1. PASTE YOUR FIREBASE CONFIG HERE ============ */
@@ -64,13 +69,15 @@ const firebaseConfig = {
 };
 /* ============================================================ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, getDocs, query, where, serverTimestamp, writeBatch, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, getDocs, query, where, serverTimestamp, writeBatch, getCountFromServer, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const $ = s => document.querySelector(s);
 const E = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
 const isUrl = s => { try { const u = new URL(s); return u.protocol === "https:" || u.protocol === "http:"; } catch { return false; } };
+const fmtDate = d => { const x = new Date(d + "T00:00:00"); return isNaN(x) ? E(d) : x.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); };
+const expired = d => { const x = new Date(d + "T23:59:59"); return !isNaN(x) && x < new Date(); };
 const href = u => isUrl(u) ? E(u) : "#";
 const CATS = ["Comedy","Music","Vlogs","Food","Tech","Education","Fashion","Fitness","Travel","Gaming","Agriculture","Other"];
 const LANGS = ["Punjabi","Hindi","English","Haryanvi","Other"];
@@ -80,7 +87,7 @@ function toast(msg, ok = true) {
   const d = document.createElement("div");
   d.setAttribute("role", "status");
   d.className = `toast-in rounded-lg px-4 py-2 text-sm text-white shadow-lg ${ok ? "bg-leaf" : "bg-red-600"}`;
-  d.textContent = msg; $("#toasts").append(d); setTimeout(() => d.remove(), 3500);
+  d.textContent = msg; d.title = "Tap to dismiss"; d.onclick = () => d.remove(); d.classList.add("cursor-pointer"); $("#toasts").append(d); setTimeout(() => d.remove(), 3500);
 }
 const spin = () => `<div class="mx-auto max-w-6xl px-4 py-10"><div class="sk h-8 w-56 rounded-lg"></div><div class="sk mt-3 h-4 w-80 max-w-full rounded"></div><div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${[1,2,3].map(() => '<div class="sk h-32 rounded-xl"></div>').join("")}</div></div>`;
 const empty = t => `<div class="card text-center text-sm text-ink/60">${t}</div>`;
@@ -98,65 +105,69 @@ if (firebaseConfig.apiKey.startsWith("PASTE")) {
   throw new Error("Firebase config missing");
 }
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
-const S = { user: null, uid: null, role: null, admin: false, ready: false };
+const S = { busy: false, user: null, uid: null, role: null, admin: false, ready: false };
 const rows = async (name, ...c) => (await getDocs(query(collection(db, name), ...c))).docs.map(d => ({ id: d.id, ...d.data() }));
 
 /* ---------- navbar ---------- */
 function nav() {
   const l = "text-sm text-ink/70 hover:text-ink";
-  $("#nav").innerHTML = `<div class="phulkari"></div><nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+  const links = `<a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a>`;
+  const acct = S.user ? `<a class="${l}" href="#/dash">Dashboard</a>${S.admin ? `<a class="${l} font-medium !text-saffron" href="#/admin">Admin</a>` : ""}<button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`;
+  $("#nav").innerHTML = `<div class="phulkari"></div><nav aria-label="Main" class="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3">
    <a href="#/" class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></a>
-   <div class="hidden gap-6 md:flex"><a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a></div>
-   <div class="flex items-center gap-2">${S.user ? `<a class="${l}" href="#/dash">Dashboard</a>${S.admin ? `<a class="${l} font-medium !text-saffron" href="#/admin">Admin</a>` : ""}<button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`}</div></nav>
-   <div class="flex justify-center gap-5 border-t border-black/5 py-1.5 text-xs md:hidden"><a href="#/creators">Creators</a><a href="#/campaigns">Campaigns</a><a href="#/how">How it works</a></div>`;
+   <div class="hidden items-center gap-6 md:flex">${links}</div>
+   <div class="hidden items-center gap-3 md:flex">${acct}</div>
+   <button class="btn2 md:!hidden" data-act="menu" aria-expanded="false" aria-controls="mm" aria-label="Open menu">Menu</button></nav>
+   <div id="mm" class="menu flex-col gap-4 border-t border-black/10 bg-white px-4 py-4 md:hidden">${links}<hr class="border-black/10"><div class="flex flex-wrap items-center gap-3">${acct}</div></div>`;
 }
 
 /* ---------- pages ---------- */
 const R = {};
-const howHtml = `<div class="grid gap-4 md:grid-cols-3">${[["Create your profile","Creators add their channels and rates. Brands describe their business."],["Post or apply","Brands publish campaigns. Creators apply with a proposal and a quoted price."],["Collaborate","Accepted applications become collaborations. Payments are handled outside the platform for now."]].map(([t, d], i) => `<div class="card"><p class="font-display text-saffron text-xl">${i + 1}</p><h3 class="mt-1 font-medium">${t}</h3><p class="mt-1 text-sm text-ink/70">${d}</p></div>`).join("")}</div>`;
+const av = (u, c = "h-12 w-12") => u && isUrl(u) ? `<img src="${href(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" class="${c} shrink-0 rounded-full object-cover">` : `<div class="${c} shrink-0 rounded-full bg-saffron/25"></div>`;
+const howHtml = `<div class="grid gap-px overflow-hidden rounded-2xl border border-black/10 bg-black/10 md:grid-cols-3">${[["Create your profile","Creators add their channels and rates. Brands describe their business."],["Post or apply","Brands publish campaigns. Creators apply with a proposal and a quoted price."],["Collaborate","Accepted applications become collaborations. Payments are handled outside the platform for now."]].map(([t, d], i) => `<div class="stag bg-white p-6"><p class="font-display text-6xl font-bold text-saffron/90">0${i + 1}</p><h3 class="mt-3 font-display text-xl">${t}</h3><p class="mt-1 text-sm text-ink/70">${d}</p></div>`).join("")}</div>`;
 
 R["/"] = async () => {
   let cr = [], ca = [];
-  try { cr = (await rows("creatorProfiles")).sort((a, b) => b.subscribers - a.subscribers).slice(0, 3); ca = (await rows("campaigns", where("status", "==", "active"))).slice(0, 3); } catch {}
-  return wrap(`
-  <section class="relative isolate grid items-center gap-10 py-10 md:grid-cols-5 md:py-16">
+  try { cr = await rows("creatorProfiles", orderBy("subscribers", "desc"), limit(3)); ca = (await rows("campaigns", where("status", "==", "active"))).filter(c => !expired(c.deadline)).slice(0, 3); } catch {}
+  const w = h => `<div class="mx-auto max-w-6xl px-4">${h}</div>`;
+  const row = r => `<a href="#/creator?id=${E(r.id)}" class="flex items-center gap-3 rounded-xl bg-white/10 p-3 transition hover:bg-white/20">${av(r.photoUrl, "h-11 w-11")}<div class="min-w-0"><p class="truncate text-sm font-medium">${E(r.displayName)}</p><p class="truncate text-xs text-white/70">${E(r.category)}, ${E(r.language)}</p></div></a>`;
+  return `${w(`<section class="relative isolate grid items-center gap-10 py-10 md:grid-cols-5 md:py-20">
     <div class="pat absolute inset-x-0 -top-6 -z-10 h-[125%]"></div>
-    <div class="md:col-span-3">
-      <h1 class="hero-in font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-6xl" style="--d:0ms">Where Punjabi Creators Meet Great Brands</h1>
-      <p class="hero-in mt-5 max-w-lg text-lg text-ink/70" style="--d:120ms">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
-      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--d:240ms"><a class="btn !px-6 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn2 !px-6 !py-3" href="#/signup?role=brand">Join as Brand</a></div>
-    </div>
-    <div class="hero-in relative h-72 md:col-span-2" style="--d:380ms">
-      <div class="float card absolute right-0 top-0 w-60 shadow-xl"><div class="flex items-center gap-3"><div class="h-10 w-10 rounded-full bg-saffron/25"></div><div><p class="text-sm font-medium">Sample Creator</p><p class="text-xs text-ink/60">Comedy, Punjabi</p></div></div><p class="mt-3 text-xs text-ink/60">Preview only. Real creators appear after they join.</p></div>
-      <div class="float2 card absolute bottom-4 left-0 w-64 shadow-xl"><p class="text-xs text-ink/60">Sample campaign</p><p class="text-sm font-medium">Reel for a new snack</p><p class="mt-1 text-sm text-indigo">₹20,000</p></div>
-    </div>
-  </section>
-  <section class="rv mt-6"><h2 class="font-display text-2xl">Featured Punjabi Creators</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
-  <section class="rv mt-12"><h2 class="font-display text-2xl">Latest Brand Campaigns</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
-  <section class="rv mt-12"><h2 class="font-display text-2xl">How it works</h2><div class="mt-4">${howHtml}</div></section>
-  <section class="rv mt-12 grid gap-4 md:grid-cols-2"><div class="card"><h3 class="font-medium">For creators</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div class="card"><h3 class="font-medium">For brands</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></section>
-  <section class="rv mt-12"><h2 class="font-display text-2xl">Testimonials</h2><div class="card mt-4 text-sm text-ink/60">Demo content: real testimonials will appear here after launch. <i>“Sample quote for layout only.” (Demo)</i></div></section>`);
+    <div class="md:col-span-3"><p class="hero-in eyebrow" style="--d:0ms">Creators. Brands. Punjab.</p>
+      <h1 class="hero-in mt-3 font-display text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" style="--d:80ms">Where Punjabi creators meet <span class="text-saffron">great brands</span></h1>
+      <p class="hero-in mt-6 max-w-lg text-lg text-ink/70" style="--d:200ms">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
+      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--d:320ms"><a class="btn3 !px-6 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn !px-6 !py-3" href="#/signup?role=brand">Join as Brand</a></div></div>
+    <div class="hero-in md:col-span-2" style="--d:300ms"><div class="float relative overflow-hidden rounded-3xl bg-indigo p-5 text-white shadow-2xl"><div class="pat absolute inset-0 !opacity-20"></div><div class="relative space-y-3"><p class="eyebrow">Featured creators</p>${cr.length ? cr.map(row).join("") : `<div class="rounded-xl border border-dashed border-white/30 p-4 text-sm text-white/80">Real creator profiles appear here as soon as creators join.</div>`}<div class="flex flex-wrap gap-2 pt-1">${["YouTube", "Instagram", "Brand campaigns"].map(t => `<span class="rounded-full bg-white/10 px-2.5 py-0.5 text-xs">${t}</span>`).join("")}</div></div></div></div>
+  </section>`)}
+  <div class="phulkari"></div>
+  ${w(`<section class="rv mt-14"><div class="flex items-end justify-between gap-3"><div><p class="eyebrow">Creators</p><h2 class="font-display text-3xl md:text-4xl">Featured Punjabi creators</h2></div><a class="lnk hidden text-sm sm:block" href="#/creators">See all</a></div><div class="mt-6 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
+  <section class="rv mt-16"><div class="flex items-end justify-between gap-3"><div><p class="eyebrow">Campaigns</p><h2 class="font-display text-3xl md:text-4xl">Latest brand campaigns</h2></div><a class="lnk hidden text-sm sm:block" href="#/campaigns">See all</a></div><div class="mt-6 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
+  <section class="rv mt-16"><p class="eyebrow">How it works</p><h2 class="mb-6 font-display text-3xl md:text-4xl">Three steps to a collaboration</h2>${howHtml}</section>`)}
+  <section class="rv mt-16 bg-indigo py-14 text-white"><div class="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2"><div><p class="eyebrow">For creators</p><ul class="mt-3 space-y-2 text-white/85"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div><p class="eyebrow">For brands</p><ul class="mt-3 space-y-2 text-white/85"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></div></section>
+  <section class="rv bg-saffron py-12 text-white"><div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4"><h2 class="font-display text-3xl">Ready to collaborate?</h2><div class="flex gap-3"><a class="btn2 !border-0" href="#/signup?role=creator">Join as Creator</a><a class="btn" href="#/signup?role=brand">Join as Brand</a></div></div></section>`;
 };
 R["/how"] = async () => wrap(`<h1 class="font-display text-3xl">How It Works</h1><div class="mt-6">${howHtml}</div>`);
 for (const [k, t, b] of [["about", "About", "Punjabi Connect connects Punjabi creators with brands. Payments are currently handled outside the platform."], ["contact", "Contact", "Add your contact email or phone here."], ["privacy", "Privacy Policy", "Draft placeholder. Have a lawyer write the final policy before launch. We never show private emails publicly."], ["terms", "Terms", "Draft placeholder. Have a lawyer write final terms before launch."]])
   R["/" + k] = async () => wrap(`<h1 class="font-display text-3xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
 
 function creatorCard(r) {
-  return `<a href="#/creator?id=${E(r.id)}" class="card hov block"><div class="flex items-center gap-3">${r.photoUrl && isUrl(r.photoUrl) ? `<img src="${href(r.photoUrl)}" alt="" class="h-12 w-12 rounded-full object-cover">` : `<div class="h-12 w-12 rounded-full bg-saffron/20"></div>`}
-  <div><p class="font-medium">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="text-xs text-ink/60">${E(r.category)}, ${E(r.language)}, ${E(r.city)} ${E(r.state)}</p></div></div>
-  <p class="mt-3 text-sm">${Number(r.subscribers || 0).toLocaleString("en-IN")} audience, ${Number(r.avgViews || 0).toLocaleString("en-IN")} avg views</p><p class="text-sm text-ink/70">From ${money(r.price)} (indicative)</p></a>`;
+  return `<a href="#/creator?id=${E(r.id)}" class="card hov block"><div class="flex items-center gap-3">${av(r.photoUrl, "h-14 w-14")}<div class="min-w-0"><p class="truncate font-display text-lg leading-tight">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="truncate text-xs text-ink/60">${E(r.city)} ${E(r.state)}</p></div></div>
+  <div class="mt-3 flex flex-wrap gap-1.5"><span class="chip">${E(r.category)}</span><span class="chip">${E(r.language)}</span>${r.youtubeUrl ? '<span class="chip">YouTube</span>' : ""}${r.instagramUrl ? '<span class="chip">Instagram</span>' : ""}</div>
+  <div class="mt-4 grid grid-cols-3 gap-2 border-t border-black/10 pt-3 text-xs text-ink/60"><div><p class="text-sm font-semibold text-ink">${Number(r.subscribers || 0).toLocaleString("en-IN")}</p>audience</div><div><p class="text-sm font-semibold text-ink">${Number(r.avgViews || 0).toLocaleString("en-IN")}</p>avg views</div><div><p class="text-sm font-semibold text-saffron">${money(r.price)}</p>indicative</div></div></a>`;
 }
 function campCard(c) {
-  return `<a href="#/campaign?id=${E(c.id)}" class="card hov block"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="font-medium">${E(c.title)}</h3>
-  <p class="mt-2 text-sm">${money(c.budget)}, ${E(c.contentType)}</p><p class="text-sm text-ink/60">${E(c.category)}, ${E(c.location)}. Apply by ${E(c.deadline)}</p></a>`;
+  const ex = expired(c.deadline);
+  return `<a href="#/campaign?id=${E(c.id)}" class="card hov block"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="mt-0.5 font-display text-lg leading-snug">${E(c.title)}</h3>
+  <p class="mt-3 font-display text-3xl text-indigo">${money(c.budget)}</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="chip">${E(c.contentType)}</span><span class="chip">${E(c.category)}</span></div>
+  <p class="mt-3 text-sm text-ink/60">${E(c.location)} · <span class="${ex ? "text-red-600" : "font-medium text-ink"}">${ex ? "Closed " : "Apply by "}${fmtDate(c.deadline)}</span></p></a>`;
 }
 
 /* explore creators */
 let CR = []; const CF = { category: "", language: "", platform: "", loc: "", aud: "", sort: "audience", n: 12 };
 function creatorList() {
   const loc = CF.loc.toLowerCase();
-  const l = CR.filter(r => (!CF.category || r.category === CF.category) && (!CF.language || r.language === CF.language) && (!CF.platform || (CF.platform === "YouTube" ? r.youtubeUrl : r.instagramUrl)) && (!loc || `${r.city} ${r.state}`.toLowerCase().includes(loc)) && (!CF.aud || r.subscribers >= Number(CF.aud)))
-    .sort((a, b) => CF.sort === "price" ? a.price - b.price : CF.sort === "views" ? b.avgViews - a.avgViews : b.subscribers - a.subscribers);
+  const l = CR.filter(r => (!CF.category || r.category === CF.category) && (!CF.language || r.language === CF.language) && (!CF.platform || (CF.platform === "YouTube" ? r.youtubeUrl : r.instagramUrl)) && (!loc || `${r.city} ${r.state}`.toLowerCase().includes(loc)) && (!CF.aud || (+r.subscribers || 0) >= Number(CF.aud)))
+    .sort((a, b) => CF.sort === "price" ? (+a.price || 0) - (+b.price || 0) : CF.sort === "views" ? (+b.avgViews || 0) - (+a.avgViews || 0) : (+b.subscribers || 0) - (+a.subscribers || 0));
   if (!l.length) return empty("No creators match these filters yet.");
   return `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.slice(0, CF.n).map(creatorCard).join("")}</div>${CF.n < l.length ? `<div class="mt-6 text-center"><button class="btn2" data-act="more">Load more</button></div>` : ""}`;
 }
@@ -165,27 +176,28 @@ R["/creators"] = async () => {
   CF.n = 12;
   return wrap(`<h1 class="font-display text-3xl">Explore Creators</h1><p class="text-sm text-ink/60">All stats are self-reported by creators and are not verified.</p>
   <div class="my-5 grid gap-2 sm:grid-cols-3 lg:grid-cols-6">
-   <select class="input" data-f="category">${opts(CATS, CF.category, "All categories")}</select><select class="input" data-f="language">${opts(LANGS, CF.language, "All languages")}</select>
-   <select class="input" data-f="platform">${opts(["YouTube", "Instagram"], CF.platform, "All platforms")}</select><input class="input" data-f="loc" placeholder="City or state" value="${E(CF.loc)}">
-   <input class="input" data-f="aud" type="number" min="0" placeholder="Min audience" value="${E(CF.aud)}">
-   <select class="input" data-f="sort"><option value="audience">Audience, high to low</option><option value="views">Average views</option><option value="price">Price, low to high</option></select></div>
+   <select class="input" data-f="category" aria-label="Category">${opts(CATS, CF.category, "All categories")}</select><select class="input" data-f="language" aria-label="Language">${opts(LANGS, CF.language, "All languages")}</select>
+   <select class="input" data-f="platform" aria-label="Platform">${opts(["YouTube", "Instagram"], CF.platform, "All platforms")}</select><input class="input" data-f="loc" aria-label="City or state" placeholder="City or state" value="${E(CF.loc)}">
+   <input class="input" data-f="aud" aria-label="Minimum audience" type="number" min="0" placeholder="Min audience" value="${E(CF.aud)}">
+   <select class="input" data-f="sort" aria-label="Sort by"><option value="audience">Audience, high to low</option><option value="views">Average views</option><option value="price">Price, low to high</option></select></div>
   <div id="clist">${creatorList()}</div>`);
 };
 R["/creator"] = async q => {
   let c; try { const s = await getDoc(doc(db, "creatorProfiles", q.get("id") || "x")); c = s.exists() ? s.data() : null; } catch {}
   if (!c) return wrap(empty("Creator not found."), "max-w-xl");
-  return wrap(`<div class="card space-y-2"><h1 class="font-display text-2xl">${E(c.displayName)}${c.isDemo ? ' <span class="text-sm text-amber-700">DEMO</span>' : ""}</h1>
-  <p class="text-sm text-ink/60">${E(c.category)}, ${E(c.language)}, ${E(c.city)} ${E(c.state)}</p><p>${E(c.bio)}</p>
-  <p class="text-sm">${Number(c.subscribers || 0).toLocaleString("en-IN")} audience, ${Number(c.avgViews || 0).toLocaleString("en-IN")} avg views <span class="text-ink/50">(self-reported, not verified)</span></p>
-  <p class="text-sm">Indicative price: ${money(c.price)}. Preferred contact: ${E(c.contactPref)}</p>
-  <div class="flex flex-wrap gap-4 text-sm">${c.youtubeUrl ? `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(c.youtubeUrl)}">YouTube</a>` : ""}${c.instagramUrl ? `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(c.instagramUrl)}">Instagram</a>` : ""}${(c.portfolio || []).map(p => `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(p)}">Portfolio</a>`).join("")}</div></div>`, "max-w-2xl");
+  const lk = (u, t) => u ? `<a class="btn2" target="_blank" rel="noopener noreferrer" href="${href(u)}">${t}</a>` : "";
+  const cta = S.role === "brand" ? `<a class="btn3" href="#/dash?tab=campaigns">Post a campaign</a>` : !S.user ? `<a class="btn3" href="#/signup?role=brand">Join as Brand to work together</a>` : "";
+  return wrap(`<a class="lnk text-sm" href="#/creators">Back to creators</a><div class="card mt-3 space-y-5 !p-0 overflow-hidden"><div class="relative bg-indigo p-6 text-white md:p-8"><div class="pat absolute inset-0 !opacity-20"></div><div class="relative flex items-center gap-4">${av(c.photoUrl, "h-20 w-20 ring-4 ring-white/20")}<div class="min-w-0"><h1 class="font-display text-3xl leading-tight">${E(c.displayName)}${c.isDemo ? ' <span class="text-sm text-amber-300">DEMO</span>' : ""}</h1><p class="text-sm text-white/75">${E(c.city)} ${E(c.state)}</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="rounded-full bg-white/15 px-2 py-0.5 text-xs">${E(c.category)}</span><span class="rounded-full bg-white/15 px-2 py-0.5 text-xs">${E(c.language)}</span></div></div></div></div>
+  <div class="space-y-5 px-6 pb-6 md:px-8"><div class="grid grid-cols-3 gap-3 text-center">${[[Number(c.subscribers || 0).toLocaleString("en-IN"), "audience"], [Number(c.avgViews || 0).toLocaleString("en-IN"), "avg views"], [money(c.price), "indicative price"]].map(([v, l]) => `<div class="rounded-xl bg-mist p-3"><p class="font-display text-xl">${v}</p><p class="text-xs text-ink/60">${l}</p></div>`).join("")}</div>
+  <p class="text-xs text-ink/50">Audience and views are self-reported by the creator and not verified.</p>${c.bio ? `<p class="whitespace-pre-line">${E(c.bio)}</p>` : ""}${c.contactPref ? `<p class="text-sm"><span class="text-ink/60">Preferred contact:</span> ${E(c.contactPref)}</p>` : ""}
+  <div class="flex flex-wrap gap-2">${lk(c.youtubeUrl, "YouTube")}${lk(c.instagramUrl, "Instagram")}${(c.portfolio || []).map(p => lk(p, "Portfolio")).join("")}${cta}</div></div></div>`, "max-w-2xl");
 };
 
 /* campaigns */
 let CC = [];
 R["/campaigns"] = async () => {
   try { CC = await rows("campaigns", where("status", "==", "active")); } catch { return wrap(empty("Could not load campaigns.")); }
-  return wrap(`<h1 class="font-display text-3xl">Brand Campaigns</h1><div class="my-4 max-w-xs"><select class="input" data-f="ccat"><option value="">All categories</option>${opts(CATS)}</select></div><div id="cclist">${campList("")}</div>`);
+  return wrap(`<h1 class="font-display text-3xl">Brand Campaigns</h1><div class="my-4 max-w-xs"><select class="input" data-f="ccat" aria-label="Category"><option value="">All categories</option>${opts(CATS)}</select></div><div id="cclist">${campList("")}</div>`);
 };
 const campList = cat => { const l = CC.filter(c => !cat || c.category === cat); return l.length ? `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.map(campCard).join("")}</div>` : empty("No active campaigns right now."); };
 R["/campaign"] = async q => {
@@ -194,19 +206,21 @@ R["/campaign"] = async q => {
   if (!c) return wrap(empty("Campaign not found or not available."), "max-w-xl");
   let applied = false;
   if (S.role === "creator") try { applied = (await rows("applications", where("creatorId", "==", S.uid), where("campaignId", "==", id))).length > 0; } catch {}
-  const box = c.status !== "active" ? `<p class="text-sm text-red-600">This campaign is ${E(c.status)}.</p>` : !S.user ? `<a class="btn" href="#/login">Login to apply</a>` : S.role !== "creator" ? `<p class="text-sm text-ink/60">Only creator accounts can apply.</p>` : applied ? `<div class="card text-sm">You have applied. Track it in your dashboard.</div>` :
+  const box = c.status === "active" && expired(c.deadline) ? `<p class="text-sm text-red-600">The deadline has passed.</p>` : c.status !== "active" ? `<p class="text-sm text-red-600">This campaign is ${E(c.status)}.</p>` : !S.user ? `<a class="btn" href="#/login">Login to apply</a>` : S.role !== "creator" ? `<p class="text-sm text-ink/60">Only creator accounts can apply.</p>` : applied ? `<div class="card text-sm">You have applied. Track it in your dashboard.</div>` :
     `<form data-form="apply" data-id="${E(id)}" class="card space-y-3"><h2 class="font-medium">Apply to this campaign</h2>${ta("Short proposal (20+ characters)", "proposal", "", 4)}${fld("Your quoted price (₹)", "price", "", "number", 'min="1"')}<button class="btn">Send application</button></form>`;
   return wrap(`<div class="space-y-4"><div class="card space-y-2"><p class="text-sm text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h1 class="font-display text-2xl">${E(c.title)}</h1><p>${E(c.description)}</p>
-  <ul class="text-sm text-ink/70"><li>Budget: ${money(c.budget)}</li><li>Content: ${E(c.contentType)}</li><li>Creator category: ${E(c.category)}. Language: ${E(c.language)}</li><li>Location: ${E(c.location)}. Minimum audience: ${E(c.minAudience)}</li><li>Deliverables: ${E(c.deliverables)}</li><li>Deadline: ${E(c.deadline)}</li>${c.requirements ? `<li>Extra: ${E(c.requirements)}</li>` : ""}</ul></div>
+  <ul class="text-sm text-ink/70"><li>Budget: ${money(c.budget)}</li><li>Content: ${E(c.contentType)}</li><li>Creator category: ${E(c.category)}. Language: ${E(c.language)}</li><li>Location: ${E(c.location)}. Minimum audience: ${Number(c.minAudience || 0).toLocaleString("en-IN")}</li><li>Deliverables: ${E(c.deliverables)}</li><li>Deadline: ${fmtDate(c.deadline)}</li>${c.requirements ? `<li>Extra: ${E(c.requirements)}</li>` : ""}</ul></div>
   ${box}${S.user ? `<button class="text-xs text-ink/50 underline" data-act="report" data-id="${E(id)}">Report this campaign</button>` : ""}</div>`, "max-w-2xl");
 };
 
 /* auth */
-R["/login"] = async () => wrap(`<form data-form="login" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Welcome back</h1>${fld("Email", "email", "", "email", "required")}${fld("Password", "password", "", "password", "required")}<button class="btn w-full">Login</button><p class="text-center text-sm"><a class="lnk" href="#/forgot">Forgot password?</a> · <a class="lnk" href="#/signup">Create account</a></p></form>`);
-R["/signup"] = async q => { const r = q.get("role") === "brand" ? "brand" : "creator"; return wrap(`<form data-form="signup" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Create your account</h1>
-  <div class="grid grid-cols-2 gap-2">${["creator", "brand"].map(x => `<label class="cursor-pointer rounded-lg border p-2 text-center text-sm capitalize has-[:checked]:border-saffron has-[:checked]:bg-saffron/10"><input class="sr-only" type="radio" name="role" value="${x}" ${x === r ? "checked" : ""}>${x}</label>`).join("")}</div>
-  ${fld("Your name or brand name", "name", "", "text", "required")}${fld("Email", "email", "", "email", "required")}${fld("Password (8+ characters)", "password", "", "password", "required")}<button class="btn w-full">Sign Up</button><p class="text-center text-sm"><a class="lnk" href="#/login">I already have an account</a></p></form>`); };
-R["/forgot"] = async () => wrap(`<form data-form="forgot" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Reset password</h1>${fld("Email", "email", "", "email", "required")}<button class="btn w-full">Send reset link</button></form>`);
+const pwf = (l, n, ac) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><span class="relative block"><input class="input pr-16" name="${n}" type="password" required autocomplete="${ac}"><button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-xs font-medium text-indigo" data-act="pw" aria-label="Show or hide password">Show</button></span></label>`;
+const authWrap = (t, sub, inner) => wrap(`<div class="mx-auto grid max-w-4xl overflow-hidden rounded-3xl border border-black/10 shadow-sm md:grid-cols-5"><div class="relative hidden bg-indigo p-8 text-white md:col-span-2 md:block"><div class="pat absolute inset-0 !opacity-25"></div><p class="relative font-display text-3xl leading-tight">Punjabi creators. Real brands.</p><p class="relative mt-3 text-sm text-white/75">Apply, collaborate and track everything in one place.</p></div><div class="p-6 md:col-span-3 md:p-10"><h1 class="font-display text-2xl">${t}</h1><p class="mb-5 text-sm text-ink/60">${sub}</p>${inner}</div></div>`, "max-w-5xl");
+R["/login"] = async () => authWrap("Welcome back", "Login to your dashboard.", `<form data-form="login" class="space-y-3">${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password", "password", "current-password")}<button class="btn w-full">Login</button><p class="text-center text-sm"><a class="lnk" href="#/forgot">Forgot password?</a> · <a class="lnk" href="#/signup">Create account</a></p></form>`);
+R["/signup"] = async q => { const r = q.get("role") === "brand" ? "brand" : "creator"; return authWrap("Create your account", "Free to join. Pick the account type that fits you.", `<form data-form="signup" class="space-y-3">
+  <div class="grid grid-cols-2 gap-2">${["creator", "brand"].map(x => `<label class="cursor-pointer rounded-lg border p-2.5 text-center text-sm capitalize transition has-[:checked]:border-saffron has-[:checked]:bg-saffron/10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-saffron"><input class="sr-only" type="radio" name="role" value="${x}" ${x === r ? "checked" : ""}>${x}</label>`).join("")}</div>
+  ${fld("Your name or brand name", "name", "", "text", "required")}${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password (8+ characters)", "password", "new-password")}<button class="btn w-full">Sign Up</button><p class="text-center text-sm"><a class="lnk" href="#/login">I already have an account</a></p></form>`); };
+R["/forgot"] = async () => authWrap("Reset password", "We will email you a reset link.", `<form data-form="forgot" class="space-y-3">${fld("Email", "email", "", "email", "required")}<button class="btn w-full">Send reset link</button></form>`);
 
 /* dashboards */
 R["/dash"] = async (q) => {
@@ -266,20 +280,26 @@ R["/admin"] = async q => {
 /* ---------- motion helpers ---------- */
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 }) : null;
 function fx(root = document) {
-  root.querySelectorAll(".grid").forEach(g => [...g.children].filter(c => c.matches(".card,a") && !c.dataset.fx).forEach((c, i) => { c.dataset.fx = 1; c.style.animation = `rise .55s cubic-bezier(.2,.7,.2,1) ${Math.min(i, 8) * 70}ms both`; }));
+  root.querySelectorAll(".grid").forEach(g => [...g.children].filter(c => c.matches(".card,a,.stag") && !c.dataset.fx).forEach((c, i) => { c.dataset.fx = 1; c.classList.add("rv2"); c.style.setProperty("--d", Math.min(i, 8) * 70 + "ms"); io ? io.observe(c) : c.classList.add("in"); }));
   root.querySelectorAll(".rv:not(.in)").forEach(el => io ? io.observe(el) : el.classList.add("in"));
 }
+const bar = Object.assign(document.createElement("div"), { id: "prog" }); document.body.prepend(bar); let tk = false;
+addEventListener("scroll", () => { if (tk) return; tk = true; requestAnimationFrame(() => { const m = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${m > 0 ? Math.min(1, scrollY / m) : 0})`; $("header").classList.toggle("shadow-md", scrollY > 8); tk = false; }); }, { passive: true });
 
 /* ---------- router ---------- */
 const go = p => { location.hash = "#" + p; return null; };
+let RT = 0;
+const TT = { "/": "Punjabi Connect", "/creators": "Explore Creators", "/campaigns": "Brand Campaigns", "/how": "How It Works", "/login": "Login", "/signup": "Sign Up", "/dash": "Dashboard", "/admin": "Admin", "/about": "About", "/contact": "Contact", "/privacy": "Privacy Policy", "/terms": "Terms" };
 async function route() {
+  const my = ++RT;
   if (!S.ready) { $("#app").innerHTML = spin(); return; }
   const [path, qs] = (location.hash.slice(1) || "/").split("?"); const q = new URLSearchParams(qs || "");
   $("#app").innerHTML = spin();
-  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); fx($("#app")); } } catch (e) { $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
+  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (my !== RT) return; document.querySelectorAll("#nav a[href^=\"#/\"]").forEach(a => a.classList.toggle("on", a.getAttribute("href").split("?")[0] === path)); document.title = (TT[path] ? TT[path] + " | " : "") + "Punjabi Connect"; if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); fx($("#app")); } } catch (e) { if (my === RT) $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
 }
 addEventListener("hashchange", route);
 onAuthStateChanged(auth, async u => {
+  if (S.busy) { S.user = u; S.uid = u?.uid || null; return; }
   if (!u || S.uid !== u.uid) { S.role = null; S.admin = false; }
   S.user = u; S.uid = u?.uid || null;
   if (u) {
@@ -297,18 +317,24 @@ const H = {
   async signup(d) {
     if (d.name.trim().length < 2) return bad("Please enter your name.");
     if (d.password.length < 8) return bad("Password must be at least 8 characters.");
+    S.busy = true; let c;
     try {
-      const c = await createUserWithEmailAndPassword(auth, d.email, d.password); await updateProfile(c.user, { displayName: d.name.trim() });
+      c = await createUserWithEmailAndPassword(auth, d.email, d.password); await updateProfile(c.user, { displayName: d.name.trim() });
       await setDoc(doc(db, "users", c.user.uid), { role: d.role, email: d.email, displayName: d.name.trim(), status: "active", createdAt: serverTimestamp() });
-      S.role = d.role; nav(); go("/dash"); route(); toast("Account created.");
-    } catch (e) { toast(e.code === "auth/email-already-in-use" ? "That email is already registered." : "Could not create account.", false); }
+      S.role = d.role; S.admin = false; S.busy = false; nav(); toast("Account created."); if (location.hash === "#/dash") route(); else go("/dash");
+    } catch (e) {
+      S.busy = false;
+      if (c?.user && e.code?.startsWith("auth/") === false) { try { await deleteUser(c.user); } catch { await signOut(auth); } }
+      toast(e.code === "auth/email-already-in-use" ? "That email is already registered." : e.code === "auth/invalid-email" ? "Enter a valid email." : e.code === "auth/weak-password" ? "Password is too weak." : "Could not create account. Please try again.", false);
+    }
   },
   async forgot(d) { try { await sendPasswordResetEmail(auth, d.email); } catch {} toast("If that email is registered, a reset link is on its way."); },
   async apply(d, f) {
     if (d.proposal.trim().length < 20) return bad("Proposal must be at least 20 characters.");
     if (!(Number(d.price) > 0)) return bad("Enter your quoted price.");
-    const id = f.dataset.id; const c = (await getDoc(doc(db, "campaigns", id))).data();
-    try { await setDoc(doc(db, "applications", `${id}_${S.uid}`), { campaignId: id, campaignTitle: c.title, brandId: c.brandId, creatorId: S.uid, creatorName: S.user.displayName || "", proposal: d.proposal.trim(), price: Number(d.price), status: "pending", createdAt: serverTimestamp(), updatedAt: serverTimestamp() }); toast("Application sent."); route(); }
+    const id = f.dataset.id;
+    try { const c = (await getDoc(doc(db, "campaigns", id))).data(); if (!c || c.status !== "active" || expired(c.deadline)) return bad("This campaign is no longer open.");
+      await setDoc(doc(db, "applications", `${id}_${S.uid}`), { campaignId: id, campaignTitle: c.title, brandId: c.brandId, creatorId: S.uid, creatorName: S.user.displayName || "", proposal: d.proposal.trim(), price: Number(d.price), status: "pending", createdAt: serverTimestamp(), updatedAt: serverTimestamp() }); toast("Application sent."); route(); }
     catch { toast("Could not apply. You may have applied already.", false); }
   },
   async creatorProfile(d) {
@@ -337,13 +363,17 @@ const H = {
     } catch { toast("Could not save campaign.", false); }
   },
 };
-document.addEventListener("submit", async e => { const f = e.target.closest("[data-form]"); if (!f) return; e.preventDefault(); const b = f.querySelector("button"); b.disabled = true; try { await H[f.dataset.form](form(f), f); } finally { b.disabled = false; } });
+document.addEventListener("submit", async e => { const f = e.target.closest("[data-form]"); if (!f) return; e.preventDefault(); const b = f.querySelector("button:not([type=button])"), bt = b.textContent; b.disabled = true; b.textContent = "Please wait…"; try { await H[f.dataset.form](form(f), f); } catch { toast("Something went wrong. Please try again.", false); } finally { b.disabled = false; b.textContent = bt; } });
 document.addEventListener("input", e => {
   const k = e.target.dataset.f; if (!k) return;
   if (k === "ccat") { $("#cclist").innerHTML = campList(e.target.value); fx($("#cclist")); return; }
-  CF[k] = e.target.value; CF.n = 12; $("#clist").innerHTML = creatorList(); fx($("#clist"));
+  CF[k] = e.target.value; CF.n = 12; clearTimeout(DB); DB = setTimeout(() => { $("#clist").innerHTML = creatorList(); fx($("#clist")); }, 150);
 });
+let DB;
+addEventListener("error", e => { const i = e.target; if (i?.tagName === "IMG" && !i.dataset.x) { i.dataset.x = 1; i.replaceWith(Object.assign(document.createElement("div"), { className: "h-12 w-12 shrink-0 rounded-full bg-saffron/20" })); } }, true);
 const A = {
+  pw: el => { const i = el.previousElementSibling, h = i.type === "password"; i.type = h ? "text" : "password"; el.textContent = h ? "Hide" : "Show"; },
+  menu: el => { const m = $("#mm"), o = m.classList.toggle("open"); el.setAttribute("aria-expanded", o); el.textContent = o ? "Close" : "Menu"; },
   logout: async () => { await signOut(auth); go("/"); },
   more: () => { CF.n += 12; $("#clist").innerHTML = creatorList(); fx($("#clist")); },
   async setStatus(el) { await updateDoc(doc(db, "campaigns", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast(el.dataset.v === "active" ? "Published." : "Closed."); route(); },
@@ -358,7 +388,7 @@ const A = {
   async report(el) { const r = prompt("Why are you reporting this campaign?"); if (!r?.trim()) return; await addDoc(collection(db, "reports"), { reporterId: S.uid, targetType: "campaign", targetId: el.dataset.id, reason: r.trim().slice(0, 500), status: "open", createdAt: serverTimestamp() }); toast("Report sent to admins."); },
   async admin(el) { const { c, id, v, del } = el.dataset; if (del) { if (!confirm("Delete this permanently?")) return; await deleteDoc(doc(db, c, id)); } else await updateDoc(doc(db, c, id), { status: v }); toast("Done."); route(); },
 };
-document.addEventListener("click", async e => { const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
+document.addEventListener("click", async e => { if (e.target.closest("#mm a")) $("#mm").classList.remove("open"); const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
 </script>
 </body>
 </html>
