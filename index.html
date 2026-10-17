@@ -265,32 +265,35 @@ for (const [k, t, b] of [["about", "About", "Punjabi Connect connects Punjabi cr
   R["/" + k] = async () => wrap(`<h1 class="display text-5xl md:text-7xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
 
 R["/privacy"] = async () => {
-  const sec = (h, b) => `<section class="card"><h2 class="font-display text-xl font-bold">${h}</h2>${b}</section>`;
-  const ul = a => `<ul class="mt-2 list-disc space-y-1.5 pl-5 text-sm text-ink/75">${a.map(x => `<li>${x}</li>`).join("")}</ul>`;
+  const sec = (h, x) => `<section class="card"><h2 class="font-display text-xl font-bold">${h}</h2>${x}</section>`;
   const p = t => `<p class="mt-2 text-sm text-ink/75">${t}</p>`;
-  return wrap(`<p class="eyebrow">Privacy</p><h1 class="display mt-2 text-5xl md:text-7xl">Privacy Policy</h1>
-  <p class="mt-3 max-w-2xl text-ink/70">Here is, in plain words, what data Punjabi Connect collects, why we need it, and who can see it.</p>
+  const ul = a => `<ul class="mt-2 list-disc space-y-1.5 pl-5 text-sm text-ink/75">${a.map(x => `<li>${x}</li>`).join("")}</ul>`;
+  return wrap(`<p class="eyebrow">Privacy Notice · version ${PV}</p><h1 class="display mt-2 text-5xl md:text-7xl">Privacy Policy</h1>
+  <p class="mt-3 max-w-2xl text-ink/70">Punjabi Connect is the Data Fiduciary for the personal data you give us. We follow India's Digital Personal Data Protection Act, 2023 (DPDP Act) and its Rules. This notice is in plain words.</p>
   <div class="mt-8 grid gap-4">
-  ${sec("Why we collect your data", p("We collect only what we need to run the platform: to create and secure your account, to help Punjabi creators and brands find each other, and to let you post campaigns, apply, accept offers and track collaborations. We do not collect data just to collect it."))}
-  ${sec("What we collect, and why", ul([
-    "<b>Name, email and password:</b> to create your account and log you in. Your password is handled by Google Firebase Authentication. We never see or store it ourselves.",
-    "<b>Account type (creator or brand):</b> to show you the right dashboard and tools.",
-    "<b>Creator profile (photo, YouTube and Instagram links, audience size, average views, category, language, city, state, price, bio, portfolio links):</b> so brands can discover you and judge if you fit their campaign. These stats are self-reported and not verified.",
-    "<b>Brand profile (brand name, logo, website, social link, contact email, phone, description):</b> so creators know who they are working with.",
-    "<b>Campaigns, applications and collaborations (briefs, budgets, proposals, quoted prices, content links):</b> to run the apply, accept and deliver process between creators and brands.",
-    "<b>Reports:</b> if you report a campaign, we keep your report so admins can review it and keep the platform safe."
-  ]))}
-  ${sec("Who can see what", ul([
-    "<b>Public:</b> creator profiles (name, links, stats, price, bio) and active campaigns can be seen by visitors.",
-    "<b>Only you and the other side of a deal:</b> applications and collaborations are visible to the creator and the brand involved.",
-    "<b>Never shown publicly:</b> your login email and password. A brand's contact email or phone is shown only if the brand chooses to add it to its profile.",
-    "<b>Admins:</b> can view accounts, campaigns and reports to moderate the platform."
-  ]))}
-  ${sec("What we do not do", ul(["We do not sell your data.", "We do not show ads or share your data with advertisers.", "We do not handle payments on the platform for now. Payments happen outside Punjabi Connect, so we hold no card or bank details."]))}
-  ${sec("Where your data is stored", p("Your data is stored with Google Firebase (Authentication and Firestore). On your own device we also keep a few small items in your browser: whether you have seen the welcome screen, the creators and campaigns you liked, and a counter for password reset requests. These stay on your device and you can clear them from your browser settings."))}
-  ${sec("Your choices", ul(["You can edit your profile any time from your dashboard.", "You can ask us to delete your account and data by emailing us from your registered email.", "You decide what goes in your bio, links and contact preference. Please do not add anything private you do not want brands to see."]))}
-  ${sec("Contact us", `<p class="mt-2 text-sm text-ink/75">Questions about your data? Email <a class="lnk" href="mailto:workgamet992@gmail.com">workgamet992@gmail.com</a> or call <a class="lnk" href="tel:+919318911116">93189 11116</a>.</p>`)}
+  ${sec("What we collect and why", ul(["<b>Name, email, password:</b> to create and secure your account. Passwords are handled by Google Firebase Authentication. We never see them.", "<b>Account type:</b> to show the right dashboard.", "<b>Creator profile</b> (photo, social links, audience size, views, category, language, city, state, price, bio, portfolio) and <b>brand profile</b> (name, logo, website, contact details, description): so creators and brands can find and judge each other.", "<b>Campaigns, applications, collaborations:</b> to run apply, accept and deliver.", "<b>Reports and grievances:</b> to keep the platform safe.", "<b>Consent record</b> (notice version, time): to prove you agreed."]) + p("We collect only what is needed for these purposes and use it for nothing else."))}
+  ${sec("Consent and withdrawal", p("We ask for your consent at sign-up. The consent box is never pre-ticked and is separate from the age confirmation. You can withdraw consent at any time, as easily as you gave it: Dashboard, Privacy &amp; data, Delete my account. Because we cannot run your account without your data, withdrawing consent erases your account and data. We will keep only what the law requires."))}
+  ${sec("Who can see your data", ul(["<b>Public:</b> creator profiles and active campaigns.", "<b>Only the creator and brand involved:</b> applications and collaborations.", "<b>Never public:</b> your login email and password. A brand's contact details show only if the brand adds them.", "<b>Admins:</b> can view accounts, campaigns and reports to moderate."]))}
+  ${sec("Your rights", ul(["<b>Access:</b> download a copy of your data from Dashboard, Privacy &amp; data.", "<b>Correction and erasure:</b> edit your profile any time, or delete your account and data.", "<b>Grievance redressal:</b> contact us below. If we do not resolve it, you may complain to the Data Protection Board of India.", "<b>Nominate:</b> you may nominate a person to exercise your rights if you die or cannot act. Email us to register a nominee."]))}
+  ${sec("Children", p("Punjabi Connect is only for people aged 18 or older. We do not knowingly process data of anyone under 18, and we do not track, profile or show targeted ads to anyone. If we learn that an account belongs to a person under 18, we will delete it."))}
+  ${sec("How long we keep data", p("We keep your data while your account is active. When you delete your account, your profile, campaigns and applications are erased. Records of a collaboration may stay with the other party and where the law requires."))}
+  ${sec("Security and breaches", p("Data is stored with Google Firebase using encrypted connections and access rules, so people can only read what they are allowed to. Admin access is limited. If a personal data breach happens, we will inform the Data Protection Board of India and affected users as the law requires."))}
+  ${sec("Where data is stored", p("Google Firebase (Authentication and Firestore). Servers may be outside India. We do not sell data, show ads or use analytics or tracking cookies. Your browser keeps only essential items: welcome screen seen, your likes, and a password reset counter. You can clear these in browser settings."))}
+  ${sec("Grievance and contact", `<p class="mt-2 text-sm text-ink/75">For access, correction, erasure, nominee or any complaint about your data, write to our contact person: <a class="lnk" href="mailto:${GRV.email}">${GRV.email}</a> or call <a class="lnk" href="tel:+919318911116">${GRV.phone}</a>. We will acknowledge your request and reply within the time the law allows.</p>`)}
   </div>`, "max-w-3xl");
+};
+const PV = "2026-10", GRV = { email: "workgamet992@gmail.com", phone: "93189 11116" };
+const consentBar = () => S.consent ? "" : `<div class="mx-auto max-w-4xl px-4 pt-6"><div class="card flex flex-wrap items-center justify-between gap-3 !border-saffron/60 bg-saffron/10"><p class="text-sm">Our <a class="lnk" href="#/privacy">Privacy Notice</a> now follows India's DPDP Act. Please confirm your consent to keep using your account.</p><button class="btn" data-act="giveConsent">I agree</button></div></div>`;
+const privPage = () => {
+  const T = S.role === "brand" ? ["profile", "campaigns", "applications", "collaborations", "privacy"] : ["profile", "applications", "collaborations", "privacy"];
+  const c = (h, t, x = "") => `<div class="card"><h2 class="font-display text-xl font-bold">${h}</h2><p class="mt-2 text-sm text-ink/75">${t}</p>${x}</div>`;
+  return wrap(`<h1 class="display mb-5 text-5xl md:text-7xl">Privacy &amp; data</h1>${tabs("/dash", T, "privacy")}<div class="grid gap-4">
+  ${c("Your consent", S.consent ? `Given for Privacy Notice version ${E(S.consent)}.` : "Not recorded yet. Please agree using the banner above.", '<a class="lnk mt-2 inline-block text-sm" href="#/privacy">Read the Privacy Notice</a>')}
+  ${c("Access your data", "Download a copy of the personal data we hold about you.", '<button class="btn mt-3" data-act="exportData">Download my data</button>')}
+  ${c("Correct your data", "Update your details any time from your profile.", '<a class="btn2 mt-3" href="#/dash?tab=profile">Edit profile</a>')}
+  ${c("Withdraw consent and delete everything", "This erases your profile, campaigns and applications and closes your account. It cannot be undone.", '<button class="btn2 mt-3 !border-red-600 !text-red-600" data-act="deleteAccount">Delete my account</button>')}
+  ${c("Grievance or nominee", "Questions, complaints, or to nominate someone to act for you:", `<a class="lnk mt-2 inline-block text-sm" href="mailto:${GRV.email}?subject=Data%20request%20or%20grievance">${GRV.email}</a>`)}
+  </div>`, "max-w-4xl");
 };
 function creatorCard(r, i = 0) {
   return `<a href="#/creator?id=${E(r.id)}" class="row grid grid-cols-[2rem_1fr_auto] items-center gap-x-4 mb-3 rounded-2xl border border-ink/10 bg-paper2 px-4 py-5 shadow-sm md:grid-cols-[3rem_5rem_1fr_auto_auto] md:gap-x-6"><span class="font-display text-sm text-ink/50">${String(i + 1).padStart(2, "0")}</span>
@@ -366,19 +369,20 @@ const authWrap = (t, sub, inner) => wrap(`<div class="mx-auto grid max-w-4xl ove
 R["/login"] = async () => authWrap("Welcome back", "Login to your dashboard.", `<form data-form="login" class="space-y-3">${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password", "password", "current-password")}<button class="btn w-full">Login</button><p class="text-center text-sm"><a class="lnk" href="#/forgot">Forgot password?</a> · <a class="lnk" href="#/signup">Create account</a></p></form>`);
 R["/signup"] = async q => { const r = q.get("role") === "brand" ? "brand" : "creator"; return authWrap("Create your account", "Free to join. Pick the account type that fits you.", `<form data-form="signup" class="space-y-3">
   <div class="grid grid-cols-2 gap-2">${["creator", "brand"].map(x => `<label class="cursor-pointer rounded-lg border p-2.5 text-center text-sm capitalize transition has-[:checked]:border-saffron has-[:checked]:bg-saffron/10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-saffron"><input class="sr-only" type="radio" name="role" value="${x}" ${x === r ? "checked" : ""}>${x}</label>`).join("")}</div>
-  ${fld("Your name or brand name", "name", "", "text", "required")}${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password (8+ characters)", "password", "new-password")}<p class="text-xs text-ink/60">Why we ask: your name and email create and secure your account, and your account type sets up the right dashboard. We never sell your data. <a class="lnk" href="#/privacy">Read how we use it</a>.</p><button class="btn w-full">Sign Up</button><p class="text-center text-sm"><a class="lnk" href="#/login">I already have an account</a></p></form>`); };
+  ${fld("Your name or brand name", "name", "", "text", "required")}${fld("Email", "email", "", "email", 'required autocomplete="email"')}${pwf("Password (8+ characters)", "password", "new-password")}<label class="flex items-start gap-2 text-xs text-ink/75"><input type="checkbox" name="age" required class="mt-0.5 h-4 w-4 shrink-0 accent-saffron"><span>I confirm that I am 18 years of age or older.</span></label><label class="flex items-start gap-2 text-xs text-ink/75"><input type="checkbox" name="consent" required class="mt-0.5 h-4 w-4 shrink-0 accent-saffron"><span>I consent to Punjabi Connect processing my name, email and the details I add, only to create my account and run creator-brand collaborations, as described in the <a class="lnk" href="#/privacy" target="_blank">Privacy Notice</a>. I can withdraw consent any time from Dashboard, Privacy &amp; data.</span></label><button class="btn w-full">Sign Up</button><p class="text-center text-sm"><a class="lnk" href="#/login">I already have an account</a></p></form>`); };
 R["/forgot"] = async () => authWrap("Reset password", "We will email you a reset link.", `<form data-form="forgot" class="space-y-3">${fld("Email", "email", "", "email", "required")}<button class="btn w-full">Send reset link</button></form>`);
 
 /* dashboards */
 R["/dash"] = async (q) => {
   if (!S.user) return go("/login");
   if (S.admin && q.get("tab") === "admin") return go("/admin");
-  if (S.role === "brand") return brandDash(q);
-  if (S.role === "creator") return creatorDash(q);
+  if (q.get("tab") === "privacy" && S.role) return consentBar() + privPage();
+  if (S.role === "brand") return consentBar() + await brandDash(q);
+  if (S.role === "creator") return consentBar() + await creatorDash(q);
   return wrap(empty("Your account has no role yet. Please sign up again."));
 };
 async function creatorDash(q) {
-  const t = q.get("tab") || "profile", T = ["profile", "applications", "collaborations"]; let b = "";
+  const t = q.get("tab") || "profile", T = ["profile", "applications", "collaborations", "privacy"]; let b = "";
   try {
     if (t === "profile") { const p = (await getDoc(doc(db, "creatorProfiles", S.uid))).data() || { displayName: S.user.displayName };
       b = `<form data-form="creatorProfile" class="card grid gap-3 md:grid-cols-2"><p class="text-xs text-ink/60 md:col-span-2">Stats are self-reported and shown to brands as unverified. Your email is never shown publicly. We show this profile to brands so they can find and judge you for campaigns. <a class="lnk" href="#/privacy">Privacy</a></p>
@@ -394,7 +398,7 @@ async function creatorDash(q) {
   return wrap(`<h1 class="display mb-3 text-5xl md:text-7xl">Creator dashboard</h1><a class="lnk mb-4 block text-sm" href="#/campaigns">Browse campaigns</a>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
 }
 async function brandDash(q) {
-  const t = q.get("tab") || "profile", T = ["profile", "campaigns", "applications", "collaborations"]; let b = "";
+  const t = q.get("tab") || "profile", T = ["profile", "campaigns", "applications", "collaborations", "privacy"]; let b = "";
   try {
     if (t === "profile") { const p = (await getDoc(doc(db, "brandProfiles", S.uid))).data() || { name: S.user.displayName };
       b = `<form data-form="brandProfile" class="card grid gap-3 md:grid-cols-2">${fld("Brand name", "name", p.name)}${fld("Logo URL", "logoUrl", p.logoUrl)}${fld("Website", "website", p.website)}${fld("Social media URL", "social", p.social)}${fld("Public contact email", "contactEmail", p.contactEmail, "email")}${fld("Phone", "phone", p.phone)}<div class="md:col-span-2">${ta("Business description", "description", p.description)}</div><div class="md:col-span-2"><button class="btn">Save profile</button></div></form>`; }
@@ -462,10 +466,10 @@ addEventListener("hashchange", route);
 addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 onAuthStateChanged(auth, async u => {
   if (S.busy) { S.user = u; S.uid = u?.uid || null; return; }
-  if (!u || S.uid !== u.uid) { S.role = null; S.admin = false; }
+  if (!u || S.uid !== u.uid) { S.role = null; S.admin = false; S.consent = null; }
   S.user = u; S.uid = u?.uid || null;
   if (u) {
-    try { const r = (await getDoc(doc(db, "users", u.uid))).data()?.role; if (r) S.role = r; } catch {}
+    try { const ud = (await getDoc(doc(db, "users", u.uid))).data(); if (ud?.role) S.role = ud.role; S.consent = ud?.consentVersion || null; } catch {}
     try { S.admin = (await getDoc(doc(db, "admins", u.uid))).exists(); } catch {}
   }
   S.ready = true; nav(); if (u) hideGate(); else showGate(); route();
@@ -491,11 +495,13 @@ const H = {
   async signup(d) {
     if (d.name.trim().length < 2) return bad("Please enter your name.");
     if (d.password.length < 8) return bad("Password must be at least 8 characters.");
+    if (!d.age) return bad("You must be 18 or older to join.");
+    if (!d.consent) return bad("Please give consent to the Privacy Notice to continue.");
     S.busy = true; let c;
     try {
       c = await createUserWithEmailAndPassword(auth, d.email, d.password); await updateProfile(c.user, { displayName: d.name.trim() });
-      await setDoc(doc(db, "users", c.user.uid), { role: d.role, email: d.email, displayName: d.name.trim(), status: "active", createdAt: serverTimestamp() });
-      S.role = d.role; S.admin = false; S.busy = false; nav(); toast("Account created."); if (location.hash === "#/dash") route(); else go("/dash");
+      await setDoc(doc(db, "users", c.user.uid), { role: d.role, email: d.email, displayName: d.name.trim(), status: "active", ageConfirmed: true, consentVersion: PV, consentAt: serverTimestamp(), createdAt: serverTimestamp() });
+      S.role = d.role; S.consent = PV; S.admin = false; S.busy = false; nav(); toast("Account created."); if (location.hash === "#/dash") route(); else go("/dash");
     } catch (e) {
       S.busy = false;
       if (c?.user && e.code?.startsWith("auth/") === false) { try { await deleteUser(c.user); } catch { await signOut(auth); } }
@@ -567,6 +573,28 @@ const A = {
   async submitContent(el) { const v = $("#cu-" + el.dataset.id).value.trim(); if (!isUrl(v)) return void toast("Enter a valid published content URL.", false); await updateDoc(doc(db, "collaborations", el.dataset.id), { contentUrl: v, status: "submitted", updatedAt: serverTimestamp() }); toast("Submitted for brand review."); route(); },
   async collab(el) { await updateDoc(doc(db, "collaborations", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast("Updated."); route(); },
   async report(el) { const r = prompt("Why are you reporting this campaign?"); if (!r?.trim()) return; await addDoc(collection(db, "reports"), { reporterId: S.uid, targetType: "campaign", targetId: el.dataset.id, reason: r.trim().slice(0, 500), status: "open", createdAt: serverTimestamp() }); toast("Report sent to admins."); },
+  async giveConsent() { await updateDoc(doc(db, "users", S.uid), { consentVersion: PV, consentAt: serverTimestamp() }); S.consent = PV; toast("Consent saved."); route(); },
+  async exportData() {
+    const k = S.role === "brand" ? "brandId" : "creatorId", one = async c => (await getDoc(doc(db, c, S.uid))).data() || null;
+    const out = { exportedAt: new Date().toISOString(), account: { uid: S.uid, email: S.user.email, name: S.user.displayName, role: S.role }, user: await one("users"), profile: await one(S.role === "brand" ? "brandProfiles" : "creatorProfiles"), applications: await rows("applications", where(k, "==", S.uid)), collaborations: await rows("collaborations", where(k, "==", S.uid)) };
+    if (S.role === "brand") out.campaigns = await rows("campaigns", where("brandId", "==", S.uid));
+    const json = JSON.stringify(out, (_, v) => v && typeof v === "object" && "seconds" in v && "nanoseconds" in v ? new Date(v.seconds * 1000).toISOString() : v, 2);
+    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(new Blob([json], { type: "application/json" })), download: "punjabi-connect-my-data.json" });
+    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1500); toast("Your data file is ready.");
+  },
+  async deleteAccount() {
+    const u = auth.currentUser; if (!u) return;
+    if (Date.now() - new Date(u.metadata.lastSignInTime) > 4 * 60 * 1000) return void toast("For security, please logout, login again, then delete.", false);
+    if (prompt("This permanently erases your account and data. Type DELETE to confirm.") !== "DELETE") return;
+    const uid = S.uid, brand = S.role === "brand", k = brand ? "brandId" : "creatorId";
+    try {
+      const del = async (n, ...w) => { for (const r of await rows(n, ...w)) await deleteDoc(doc(db, n, r.id)); };
+      await del("applications", where(k, "==", uid)); if (brand) await del("campaigns", where("brandId", "==", uid));
+      await deleteDoc(doc(db, brand ? "brandProfiles" : "creatorProfiles", uid)); await deleteDoc(doc(db, "users", uid));
+      await deleteUser(u); try { localStorage.removeItem("pcLikes"); } catch {}
+      go("/"); toast("Your account and data were deleted.");
+    } catch (e) { toast(e.code === "auth/requires-recent-login" ? "Please login again, then retry." : "Could not delete everything. Email us and we will finish it.", false); }
+  },
   async admin(el) { const { c, id, v, del } = el.dataset; if (del) { if (!confirm("Delete this permanently?")) return; await deleteDoc(doc(db, c, id)); } else await updateDoc(doc(db, c, id), { status: v }); toast("Done."); route(); },
 };
 document.addEventListener("click", async e => { if (e.target.closest("#drawer a, #drawer [data-act=logout]")) closeMenu(); const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
