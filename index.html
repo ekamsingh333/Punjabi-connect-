@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Punjabi Connect</title>
+<meta name="description" content="Where Punjabi Creators Meet Great Brands">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{display:['"Bricolage Grotesque"','sans-serif'],sans:['Hind','system-ui','sans-serif']},colors:{saffron:'#D9780A',indigo:'#2B2F77',ink:'#14161C',mist:'#F5F6F8',leaf:'#1F7A55'}}}}</script>
+<style type="text/tailwindcss">
+@layer components{
+ .input{@apply w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-sm outline-none focus:border-indigo focus:ring-2 focus:ring-indigo/20}
+ .btn{@apply inline-flex items-center justify-center rounded-lg bg-indigo px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo/90 disabled:opacity-50}
+ .btn2{@apply inline-flex items-center justify-center rounded-lg border border-black/15 bg-white px-4 py-2 text-sm font-medium hover:bg-mist}
+ .card{@apply rounded-xl border border-black/10 bg-white p-5}
+ .lnk{@apply text-indigo underline underline-offset-2 hover:text-saffron}
+}
+.phulkari{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/14px 14px;height:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body class="bg-white font-sans text-ink antialiased">
+<header class="sticky top-0 z-30 border-b border-black/10 bg-white/95 backdrop-blur"><div id="nav"></div></header>
+<main id="app" class="min-h-[70vh]"></main>
+<footer class="mt-20 border-t border-black/10 py-8 text-center text-sm text-ink/60">
+ <div class="flex flex-wrap justify-center gap-5"><a href="#/about">About</a><a href="#/contact">Contact</a><a href="#/privacy">Privacy Policy</a><a href="#/terms">Terms</a></div>
+ <p class="mt-3">© Punjabi Connect</p>
+</footer>
+<div id="toasts" class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 space-y-2"></div>
+
+<script type="module">
+/* ============ 1. PASTE YOUR FIREBASE CONFIG HERE ============ */
+const firebaseConfig = {
+  apiKey: "PASTE_API_KEY", authDomain: "PASTE_AUTH_DOMAIN", projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_STORAGE_BUCKET", messagingSenderId: "PASTE_SENDER_ID", appId: "PASTE_APP_ID"
+};
+/* ============================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, getDocs, query, where, serverTimestamp, writeBatch, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+const $ = s => document.querySelector(s);
+const E = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
+const isUrl = s => { try { const u = new URL(s); return u.protocol === "https:" || u.protocol === "http:"; } catch { return false; } };
+const href = u => isUrl(u) ? E(u) : "#";
+const CATS = ["Comedy","Music","Vlogs","Food","Tech","Education","Fashion","Fitness","Travel","Gaming","Agriculture","Other"];
+const LANGS = ["Punjabi","Hindi","English","Haryanvi","Other"];
+const TYPES = ["YouTube video","YouTube Short","Instagram Reel","Instagram post","Instagram story"];
+
+function toast(msg, ok = true) {
+  const d = document.createElement("div");
+  d.setAttribute("role", "status");
+  d.className = `rounded-lg px-4 py-2 text-sm text-white shadow ${ok ? "bg-leaf" : "bg-red-600"}`;
+  d.textContent = msg; $("#toasts").append(d); setTimeout(() => d.remove(), 3500);
+}
+const spin = () => `<div class="flex justify-center py-16"><div class="h-6 w-6 animate-spin rounded-full border-2 border-saffron border-t-transparent"></div></div>`;
+const empty = t => `<div class="card text-center text-sm text-ink/60">${t}</div>`;
+const wrap = (h, w = "max-w-6xl") => `<div class="mx-auto ${w} px-4 py-10">${h}</div>`;
+const badge = s => { const c = { pending: "bg-amber-100 text-amber-800", accepted: "bg-leaf/10 text-leaf", completed: "bg-leaf/10 text-leaf", rejected: "bg-red-50 text-red-600", suspended: "bg-red-50 text-red-600" }[s] || "bg-black/5"; return `<span class="rounded-full px-2 py-0.5 text-xs ${c}">${E(String(s).replace("_", " "))}</span>`; };
+const opts = (a, sel, any) => (any ? `<option value="">${any}</option>` : "") + a.map(o => `<option ${o === sel ? "selected" : ""}>${o}</option>`).join("");
+const fld = (l, n, v = "", t = "text", x = "") => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><input class="input" name="${n}" type="${t}" value="${E(v)}" ${x}></label>`;
+const ta = (l, n, v = "", r = 3) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><textarea class="input" name="${n}" rows="${r}">${E(v)}</textarea></label>`;
+const sel = (l, n, a, v) => `<label class="block text-sm"><span class="mb-1 block text-ink/70">${l}</span><select class="input" name="${n}">${opts(a, v)}</select></label>`;
+const tabs = (base, list, cur) => `<div class="mb-5 flex gap-2 overflow-x-auto">${list.map(t => `<a href="#${base}?tab=${t}" class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm capitalize ${t === cur ? "bg-indigo text-white" : "border border-black/10"}">${t}</a>`).join("")}</div>`;
+
+/* ---------- setup screen if config missing ---------- */
+if (firebaseConfig.apiKey.startsWith("PASTE")) {
+  $("#app").innerHTML = wrap(`<div class="card"><h1 class="font-display text-2xl">One step left</h1><p class="mt-2 text-sm">Open this file in a text editor and paste your Firebase web config where it says <b>PASTE YOUR FIREBASE CONFIG HERE</b>, then upload it again.</p></div>`, "max-w-xl");
+  throw new Error("Firebase config missing");
+}
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+const S = { user: null, uid: null, role: null, admin: false, ready: false };
+const rows = async (name, ...c) => (await getDocs(query(collection(db, name), ...c))).docs.map(d => ({ id: d.id, ...d.data() }));
+
+/* ---------- navbar ---------- */
+function nav() {
+  const l = "text-sm text-ink/70 hover:text-ink";
+  $("#nav").innerHTML = `<div class="phulkari"></div><nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+   <a href="#/" class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></a>
+   <div class="hidden gap-6 md:flex"><a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a></div>
+   <div class="flex items-center gap-2">${S.user ? `<a class="${l}" href="#/dash">Dashboard</a><button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`}</div></nav>
+   <div class="flex justify-center gap-5 border-t border-black/5 py-1.5 text-xs md:hidden"><a href="#/creators">Creators</a><a href="#/campaigns">Campaigns</a><a href="#/how">How it works</a></div>`;
+}
+
+/* ---------- pages ---------- */
+const R = {};
+const howHtml = `<div class="grid gap-4 md:grid-cols-3">${[["Create your profile","Creators add their channels and rates. Brands describe their business."],["Post or apply","Brands publish campaigns. Creators apply with a proposal and a quoted price."],["Collaborate","Accepted applications become collaborations. Payments are handled outside the platform for now."]].map(([t, d], i) => `<div class="card"><p class="font-display text-saffron text-xl">${i + 1}</p><h3 class="mt-1 font-medium">${t}</h3><p class="mt-1 text-sm text-ink/70">${d}</p></div>`).join("")}</div>`;
+
+R["/"] = async () => {
+  let cr = [], ca = [];
+  try { cr = (await rows("creatorProfiles")).sort((a, b) => b.subscribers - a.subscribers).slice(0, 3); ca = (await rows("campaigns", where("status", "==", "active"))).slice(0, 3); } catch {}
+  return wrap(`
+  <section class="grid items-center gap-8 py-12 md:grid-cols-5"><div class="md:col-span-3">
+    <h1 class="font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">Where Punjabi Creators Meet Great Brands</h1>
+    <p class="mt-4 max-w-lg text-ink/70">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
+    <div class="mt-7 flex flex-wrap gap-3"><a class="btn" href="#/signup?role=creator">Join as Creator</a><a class="btn2" href="#/signup?role=brand">Join as Brand</a></div></div>
+    <div class="md:col-span-2"><div class="phulkari rounded-t-xl" style="height:18px"></div><div class="card rounded-t-none"><p class="font-medium">A simple path to a paid collaboration</p><p class="mt-2 text-sm text-ink/70">Brand posts a brief, creator sends a proposal and price, brand accepts, creator submits the published link.</p></div></div></section>
+  <section class="mt-6"><h2 class="font-display text-2xl">Featured Punjabi Creators</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
+  <section class="mt-12"><h2 class="font-display text-2xl">Latest Brand Campaigns</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
+  <section class="mt-12"><h2 class="font-display text-2xl">How it works</h2><div class="mt-4">${howHtml}</div></section>
+  <section class="mt-12 grid gap-4 md:grid-cols-2"><div class="card"><h3 class="font-medium">For creators</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div class="card"><h3 class="font-medium">For brands</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></section>
+  <section class="mt-12"><h2 class="font-display text-2xl">Testimonials</h2><div class="card mt-4 text-sm text-ink/60">Demo content: real testimonials will appear here after launch. <i>“Sample quote for layout only.” (Demo)</i></div></section>`);
+};
+R["/how"] = async () => wrap(`<h1 class="font-display text-3xl">How It Works</h1><div class="mt-6">${howHtml}</div>`);
+for (const [k, t, b] of [["about", "About", "Punjabi Connect connects Punjabi creators with brands. Payments are currently handled outside the platform."], ["contact", "Contact", "Add your contact email or phone here."], ["privacy", "Privacy Policy", "Draft placeholder. Have a lawyer write the final policy before launch. We never show private emails publicly."], ["terms", "Terms", "Draft placeholder. Have a lawyer write final terms before launch."]])
+  R["/" + k] = async () => wrap(`<h1 class="font-display text-3xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
+
+function creatorCard(r) {
+  return `<a href="#/creator?id=${E(r.id)}" class="card block hover:border-saffron"><div class="flex items-center gap-3">${r.photoUrl && isUrl(r.photoUrl) ? `<img src="${href(r.photoUrl)}" alt="" class="h-12 w-12 rounded-full object-cover">` : `<div class="h-12 w-12 rounded-full bg-saffron/20"></div>`}
+  <div><p class="font-medium">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="text-xs text-ink/60">${E(r.category)}, ${E(r.language)}, ${E(r.city)} ${E(r.state)}</p></div></div>
+  <p class="mt-3 text-sm">${Number(r.subscribers || 0).toLocaleString("en-IN")} audience, ${Number(r.avgViews || 0).toLocaleString("en-IN")} avg views</p><p class="text-sm text-ink/70">From ${money(r.price)} (indicative)</p></a>`;
+}
+function campCard(c) {
+  return `<a href="#/campaign?id=${E(c.id)}" class="card block hover:border-saffron"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="font-medium">${E(c.title)}</h3>
+  <p class="mt-2 text-sm">${money(c.budget)}, ${E(c.contentType)}</p><p class="text-sm text-ink/60">${E(c.category)}, ${E(c.location)}. Apply by ${E(c.deadline)}</p></a>`;
+}
+
+/* explore creators */
+let CR = []; const CF = { category: "", language: "", platform: "", loc: "", aud: "", sort: "audience", n: 12 };
+function creatorList() {
+  const loc = CF.loc.toLowerCase();
+  const l = CR.filter(r => (!CF.category || r.category === CF.category) && (!CF.language || r.language === CF.language) && (!CF.platform || (CF.platform === "YouTube" ? r.youtubeUrl : r.instagramUrl)) && (!loc || `${r.city} ${r.state}`.toLowerCase().includes(loc)) && (!CF.aud || r.subscribers >= Number(CF.aud)))
+    .sort((a, b) => CF.sort === "price" ? a.price - b.price : CF.sort === "views" ? b.avgViews - a.avgViews : b.subscribers - a.subscribers);
+  if (!l.length) return empty("No creators match these filters yet.");
+  return `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.slice(0, CF.n).map(creatorCard).join("")}</div>${CF.n < l.length ? `<div class="mt-6 text-center"><button class="btn2" data-act="more">Load more</button></div>` : ""}`;
+}
+R["/creators"] = async () => {
+  try { CR = await rows("creatorProfiles"); } catch { return wrap(empty("Could not load creators. Check your connection.")); }
+  CF.n = 12;
+  return wrap(`<h1 class="font-display text-3xl">Explore Creators</h1><p class="text-sm text-ink/60">All stats are self-reported by creators and are not verified.</p>
+  <div class="my-5 grid gap-2 sm:grid-cols-3 lg:grid-cols-6">
+   <select class="input" data-f="category">${opts(CATS, CF.category, "All categories")}</select><select class="input" data-f="language">${opts(LANGS, CF.language, "All languages")}</select>
+   <select class="input" data-f="platform">${opts(["YouTube", "Instagram"], CF.platform, "All platforms")}</select><input class="input" data-f="loc" placeholder="City or state" value="${E(CF.loc)}">
+   <input class="input" data-f="aud" type="number" min="0" placeholder="Min audience" value="${E(CF.aud)}">
+   <select class="input" data-f="sort"><option value="audience">Audience, high to low</option><option value="views">Average views</option><option value="price">Price, low to high</option></select></div>
+  <div id="clist">${creatorList()}</div>`);
+};
+R["/creator"] = async q => {
+  let c; try { const s = await getDoc(doc(db, "creatorProfiles", q.get("id") || "x")); c = s.exists() ? s.data() : null; } catch {}
+  if (!c) return wrap(empty("Creator not found."), "max-w-xl");
+  return wrap(`<div class="card space-y-2"><h1 class="font-display text-2xl">${E(c.displayName)}${c.isDemo ? ' <span class="text-sm text-amber-700">DEMO</span>' : ""}</h1>
+  <p class="text-sm text-ink/60">${E(c.category)}, ${E(c.language)}, ${E(c.city)} ${E(c.state)}</p><p>${E(c.bio)}</p>
+  <p class="text-sm">${Number(c.subscribers || 0).toLocaleString("en-IN")} audience, ${Number(c.avgViews || 0).toLocaleString("en-IN")} avg views <span class="text-ink/50">(self-reported, not verified)</span></p>
+  <p class="text-sm">Indicative price: ${money(c.price)}. Preferred contact: ${E(c.contactPref)}</p>
+  <div class="flex flex-wrap gap-4 text-sm">${c.youtubeUrl ? `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(c.youtubeUrl)}">YouTube</a>` : ""}${c.instagramUrl ? `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(c.instagramUrl)}">Instagram</a>` : ""}${(c.portfolio || []).map(p => `<a class="lnk" target="_blank" rel="noopener noreferrer" href="${href(p)}">Portfolio</a>`).join("")}</div></div>`, "max-w-2xl");
+};
+
+/* campaigns */
+let CC = [];
+R["/campaigns"] = async () => {
+  try { CC = await rows("campaigns", where("status", "==", "active")); } catch { return wrap(empty("Could not load campaigns.")); }
+  return wrap(`<h1 class="font-display text-3xl">Brand Campaigns</h1><div class="my-4 max-w-xs"><select class="input" data-f="ccat"><option value="">All categories</option>${opts(CATS)}</select></div><div id="cclist">${campList("")}</div>`);
+};
+const campList = cat => { const l = CC.filter(c => !cat || c.category === cat); return l.length ? `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${l.map(campCard).join("")}</div>` : empty("No active campaigns right now."); };
+R["/campaign"] = async q => {
+  const id = q.get("id") || "x"; let c;
+  try { const s = await getDoc(doc(db, "campaigns", id)); c = s.exists() ? { id: s.id, ...s.data() } : null; } catch {}
+  if (!c) return wrap(empty("Campaign not found or not available."), "max-w-xl");
+  let applied = false;
+  if (S.role === "creator") try { applied = (await rows("applications", where("creatorId", "==", S.uid), where("campaignId", "==", id))).length > 0; } catch {}
+  const box = c.status !== "active" ? `<p class="text-sm text-red-600">This campaign is ${E(c.status)}.</p>` : !S.user ? `<a class="btn" href="#/login">Login to apply</a>` : S.role !== "creator" ? `<p class="text-sm text-ink/60">Only creator accounts can apply.</p>` : applied ? `<div class="card text-sm">You have applied. Track it in your dashboard.</div>` :
+    `<form data-form="apply" data-id="${E(id)}" class="card space-y-3"><h2 class="font-medium">Apply to this campaign</h2>${ta("Short proposal (20+ characters)", "proposal", "", 4)}${fld("Your quoted price (₹)", "price", "", "number", 'min="1"')}<button class="btn">Send application</button></form>`;
+  return wrap(`<div class="space-y-4"><div class="card space-y-2"><p class="text-sm text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h1 class="font-display text-2xl">${E(c.title)}</h1><p>${E(c.description)}</p>
+  <ul class="text-sm text-ink/70"><li>Budget: ${money(c.budget)}</li><li>Content: ${E(c.contentType)}</li><li>Creator category: ${E(c.category)}. Language: ${E(c.language)}</li><li>Location: ${E(c.location)}. Minimum audience: ${E(c.minAudience)}</li><li>Deliverables: ${E(c.deliverables)}</li><li>Deadline: ${E(c.deadline)}</li>${c.requirements ? `<li>Extra: ${E(c.requirements)}</li>` : ""}</ul></div>
+  ${box}${S.user ? `<button class="text-xs text-ink/50 underline" data-act="report" data-id="${E(id)}">Report this campaign</button>` : ""}</div>`, "max-w-2xl");
+};
+
+/* auth */
+R["/login"] = async () => wrap(`<form data-form="login" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Welcome back</h1>${fld("Email", "email", "", "email", "required")}${fld("Password", "password", "", "password", "required")}<button class="btn w-full">Login</button><p class="text-center text-sm"><a class="lnk" href="#/forgot">Forgot password?</a> · <a class="lnk" href="#/signup">Create account</a></p></form>`);
+R["/signup"] = async q => { const r = q.get("role") === "brand" ? "brand" : "creator"; return wrap(`<form data-form="signup" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Create your account</h1>
+  <div class="grid grid-cols-2 gap-2">${["creator", "brand"].map(x => `<label class="cursor-pointer rounded-lg border p-2 text-center text-sm capitalize has-[:checked]:border-saffron has-[:checked]:bg-saffron/10"><input class="sr-only" type="radio" name="role" value="${x}" ${x === r ? "checked" : ""}>${x}</label>`).join("")}</div>
+  ${fld("Your name or brand name", "name", "", "text", "required")}${fld("Email", "email", "", "email", "required")}${fld("Password (8+ characters)", "password", "", "password", "required")}<button class="btn w-full">Sign Up</button><p class="text-center text-sm"><a class="lnk" href="#/login">I already have an account</a></p></form>`); };
+R["/forgot"] = async () => wrap(`<form data-form="forgot" class="card mx-auto max-w-sm space-y-3"><h1 class="font-display text-xl">Reset password</h1>${fld("Email", "email", "", "email", "required")}<button class="btn w-full">Send reset link</button></form>`);
+
+/* dashboards */
+R["/dash"] = async (q) => {
+  if (!S.user) return go("/login");
+  if (S.admin && q.get("tab") === "admin") return go("/admin");
+  if (S.role === "brand") return brandDash(q);
+  if (S.role === "creator") return creatorDash(q);
+  return wrap(empty("Your account has no role yet. Please sign up again."));
+};
+async function creatorDash(q) {
+  const t = q.get("tab") || "profile", T = ["profile", "applications", "collaborations"]; let b = "";
+  try {
+    if (t === "profile") { const p = (await getDoc(doc(db, "creatorProfiles", S.uid))).data() || { displayName: S.user.displayName };
+      b = `<form data-form="creatorProfile" class="card grid gap-3 md:grid-cols-2"><p class="text-xs text-ink/60 md:col-span-2">Stats are self-reported and shown to brands as unverified. Your email is never shown publicly.</p>
+      ${fld("Creator name", "displayName", p.displayName)}${fld("Profile photo URL", "photoUrl", p.photoUrl)}${fld("YouTube channel URL", "youtubeUrl", p.youtubeUrl)}${fld("Instagram profile URL", "instagramUrl", p.instagramUrl)}
+      ${fld("Subscribers / followers (self-reported)", "subscribers", p.subscribers, "number", 'min="0"')}${fld("Average views per video (self-reported)", "avgViews", p.avgViews, "number", 'min="0"')}
+      ${sel("Content category", "category", CATS, p.category)}${sel("Preferred language", "language", LANGS, p.language)}${fld("City", "city", p.city)}${fld("State", "state", p.state)}
+      ${fld("Collaboration price (₹)", "price", p.price, "number", 'min="0"')}${fld("Contact preference (e.g. WhatsApp)", "contactPref", p.contactPref)}
+      <div class="md:col-span-2">${ta("Short bio (max 500 characters)", "bio", p.bio)}</div><div class="md:col-span-2">${ta("Portfolio links (one per line)", "portfolio", (p.portfolio || []).join("\n"))}</div><div class="md:col-span-2"><button class="btn">Save profile</button></div></form>`; }
+    if (t === "applications") { const a = await rows("applications", where("creatorId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(x => `<div class="card flex items-center justify-between"><div><a class="font-medium lnk" href="#/campaign?id=${E(x.campaignId)}">${E(x.campaignTitle)}</a><p class="text-sm text-ink/60">Quoted ${money(x.price)}</p></div>${badge(x.status)}</div>`).join("")}</div>` : empty("No applications yet. Browse campaigns and apply."); }
+    if (t === "collaborations") { const a = await rows("collaborations", where("creatorId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(c => `<div class="card space-y-2"><div class="flex justify-between"><p class="font-medium">${E(c.campaignTitle)}</p>${badge(c.status)}</div><p class="text-xs text-ink/60">Agreed ${money(c.agreedPrice)}. Payments are handled outside the platform for now.</p>${c.contentUrl ? `<a class="lnk text-sm" target="_blank" rel="noopener noreferrer" href="${href(c.contentUrl)}">Submitted content</a>` : ""}
+        ${c.status !== "completed" ? `<div class="flex gap-2"><input class="input" id="cu-${E(c.id)}" placeholder="Published content URL"><button class="btn" data-act="submitContent" data-id="${E(c.id)}">Submit</button></div>` : ""}</div>`).join("")}</div>` : empty("No collaborations yet. They appear when a brand accepts your application."); }
+  } catch { b = empty("Could not load this section."); }
+  return wrap(`<h1 class="font-display mb-1 text-2xl">Creator dashboard</h1><a class="lnk mb-4 block text-sm" href="#/campaigns">Browse campaigns</a>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
+}
+async function brandDash(q) {
+  const t = q.get("tab") || "profile", T = ["profile", "campaigns", "applications", "collaborations"]; let b = "";
+  try {
+    if (t === "profile") { const p = (await getDoc(doc(db, "brandProfiles", S.uid))).data() || { name: S.user.displayName };
+      b = `<form data-form="brandProfile" class="card grid gap-3 md:grid-cols-2">${fld("Brand name", "name", p.name)}${fld("Logo URL", "logoUrl", p.logoUrl)}${fld("Website", "website", p.website)}${fld("Social media URL", "social", p.social)}${fld("Public contact email", "contactEmail", p.contactEmail, "email")}${fld("Phone", "phone", p.phone)}<div class="md:col-span-2">${ta("Business description", "description", p.description)}</div><div class="md:col-span-2"><button class="btn">Save profile</button></div></form>`; }
+    if (t === "campaigns") { const l = await rows("campaigns", where("brandId", "==", S.uid)); const e = l.find(x => x.id === q.get("edit")) || {};
+      b = `<form data-form="campaign" data-id="${E(e.id || "")}" class="card mb-6 grid gap-3 md:grid-cols-2"><h3 class="font-medium md:col-span-2">${e.id ? "Edit campaign" : "New campaign"}</h3>${fld("Campaign title", "title", e.title)}${fld("Total budget (₹)", "budget", e.budget, "number", 'min="1"')}${sel("Preferred creator category", "category", CATS, e.category)}${sel("Preferred language", "language", LANGS, e.language)}${sel("Content type", "contentType", TYPES, e.contentType)}${fld("Minimum audience size", "minAudience", e.minAudience, "number", 'min="0"')}${fld("Target location", "location", e.location)}${fld("Deadline", "deadline", e.deadline, "date")}
+      <div class="md:col-span-2">${ta("Product or service description", "description", e.description)}</div>${fld("Deliverables", "deliverables", e.deliverables)}${fld("Additional requirements", "requirements", e.requirements)}<div class="md:col-span-2"><button class="btn">${e.id ? "Update campaign" : "Create campaign"}</button>${e.id ? ' <a class="lnk ml-2 text-sm" href="#/dash?tab=campaigns">Cancel</a>' : ""}</div></form>
+      ${l.length ? `<div class="space-y-3">${l.map(c => `<div class="card flex flex-wrap items-center justify-between gap-2"><div><p class="font-medium">${E(c.title)}</p><p class="text-sm text-ink/60">${money(c.budget)}, ${E(c.contentType)}</p></div><div class="flex items-center gap-3 text-sm">${badge(c.status)}<a class="lnk" href="#/dash?tab=campaigns&edit=${E(c.id)}">Edit</a>${c.status !== "active" ? `<button class="lnk" data-act="setStatus" data-id="${E(c.id)}" data-v="active">Publish</button>` : `<button class="lnk" data-act="setStatus" data-id="${E(c.id)}" data-v="closed">Close</button>`}</div></div>`).join("")}</div>` : empty("No campaigns yet. Create your first one above.")}`; }
+    if (t === "applications") { const a = await rows("applications", where("brandId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(x => `<div class="card space-y-2"><div class="flex justify-between"><p class="font-medium">${E(x.creatorName)} <span class="font-normal text-ink/60">for ${E(x.campaignTitle)}</span></p>${badge(x.status)}</div><p class="text-sm">${E(x.proposal)}</p><p class="text-sm text-ink/60">Quoted ${money(x.price)}</p>
+        <div class="flex gap-4 text-sm"><a class="lnk" href="#/creator?id=${E(x.creatorId)}">Open profile</a>${x.status === "pending" ? `<button class="lnk" data-act="decide" data-id="${E(x.id)}" data-v="accepted">Accept</button><button class="lnk" data-act="decide" data-id="${E(x.id)}" data-v="rejected">Reject</button>` : ""}</div></div>`).join("")}</div>` : empty("No applications yet."); }
+    if (t === "collaborations") { const a = await rows("collaborations", where("brandId", "==", S.uid)); b = a.length ? `<div class="space-y-3">${a.map(c => `<div class="card space-y-2"><div class="flex justify-between"><p class="font-medium">${E(c.creatorName)}: ${E(c.campaignTitle)}</p>${badge(c.status)}</div><p class="text-xs text-ink/60">Agreed ${money(c.agreedPrice)}. Payments are handled outside the platform for now.</p>${c.contentUrl ? `<a class="lnk text-sm" target="_blank" rel="noopener noreferrer" href="${href(c.contentUrl)}">Review submitted content</a>` : ""}
+        ${c.status === "submitted" ? `<div class="flex gap-4 text-sm"><button class="lnk" data-act="collab" data-id="${E(c.id)}" data-v="completed">Mark completed</button><button class="lnk" data-act="collab" data-id="${E(c.id)}" data-v="in_progress">Request changes</button></div>` : ""}</div>`).join("")}</div>` : empty("No collaborations yet."); }
+  } catch { b = empty("Could not load this section."); }
+  return wrap(`<h1 class="font-display mb-4 text-2xl">Brand dashboard</h1>${tabs("/dash", T, t)}${b}`, "max-w-4xl");
+}
+
+/* admin (UI only; Firestore rules enforce access) */
+R["/admin"] = async q => {
+  if (!S.admin) return go("/dash");
+  const t = q.get("tab") || "overview", T = ["overview", "users", "campaigns", "reports"]; let b = "";
+  const cnt = async (c, ...w) => (await getCountFromServer(query(collection(db, c), ...w))).data().count;
+  try {
+    if (t === "overview") { const v = await Promise.all([cnt("users", where("role", "==", "creator")), cnt("users", where("role", "==", "brand")), cnt("campaigns"), cnt("applications"), cnt("collaborations", where("status", "==", "in_progress"))]);
+      b = `<div class="grid gap-3 sm:grid-cols-3">${["Creators", "Brands", "Campaigns", "Applications", "Active collaborations"].map((k, i) => `<div class="card"><p class="text-sm text-ink/60">${k}</p><p class="font-display text-3xl">${v[i]}</p></div>`).join("")}</div>`; }
+    else { const l = await rows(t); b = l.length ? `<div class="space-y-2">${l.map(r => `<div class="card flex flex-wrap items-center justify-between gap-2 text-sm"><div>${t === "users" ? `<p class="font-medium">${E(r.displayName)}, ${E(r.role)}</p><p class="text-ink/60">${E(r.email)}</p>` : t === "campaigns" ? `<p class="font-medium">${E(r.title)}</p><p class="text-ink/60">${E(r.brandName)}</p>` : `<p class="font-medium">${E(r.targetType)}: ${E(r.targetId)}</p><p class="text-ink/60">${E(r.reason)}</p>`}</div>
+      <div class="flex items-center gap-3">${badge(r.status)}${t === "users" ? `<button class="lnk" data-act="admin" data-c="users" data-id="${E(r.id)}" data-v="${r.status === "active" ? "suspended" : "active"}">${r.status === "active" ? "Suspend" : "Restore"}</button>` : ""}${t === "campaigns" ? `<button class="lnk" data-act="admin" data-c="campaigns" data-id="${E(r.id)}" data-v="closed">Close</button><button class="lnk" data-act="admin" data-c="campaigns" data-id="${E(r.id)}" data-del="1">Delete</button>` : ""}${t === "reports" ? `<button class="lnk" data-act="admin" data-c="reports" data-id="${E(r.id)}" data-v="resolved">Resolve</button><button class="lnk" data-act="admin" data-c="reports" data-id="${E(r.id)}" data-del="1">Delete</button>` : ""}</div></div>`).join("")}</div>` : empty("Nothing here."); }
+  } catch { b = empty("Could not load. Make sure your account is added to the admins collection."); }
+  return wrap(`<h1 class="font-display mb-4 text-2xl">Admin dashboard</h1>${tabs("/admin", T, t)}${b}`, "max-w-5xl");
+};
+
+/* ---------- router ---------- */
+const go = p => { location.hash = "#" + p; return null; };
+async function route() {
+  if (!S.ready) { $("#app").innerHTML = spin(); return; }
+  const [path, qs] = (location.hash.slice(1) || "/").split("?"); const q = new URLSearchParams(qs || "");
+  $("#app").innerHTML = spin();
+  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); } } catch (e) { $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
+}
+addEventListener("hashchange", route);
+onAuthStateChanged(auth, async u => {
+  if (!u || S.uid !== u.uid) { S.role = null; S.admin = false; }
+  S.user = u; S.uid = u?.uid || null;
+  if (u) {
+    try { const r = (await getDoc(doc(db, "users", u.uid))).data()?.role; if (r) S.role = r; } catch {}
+    try { S.admin = (await getDoc(doc(db, "admins", u.uid))).exists(); } catch {}
+  }
+  S.ready = true; nav(); route();
+});
+
+/* ---------- events ---------- */
+const form = f => Object.fromEntries(new FormData(f));
+const bad = m => { toast(m, false); return true; };
+const H = {
+  async login(d) { try { await signInWithEmailAndPassword(auth, d.email, d.password); go("/dash"); } catch { toast("Invalid email or password.", false); } },
+  async signup(d) {
+    if (d.name.trim().length < 2) return bad("Please enter your name.");
+    if (d.password.length < 8) return bad("Password must be at least 8 characters.");
+    try {
+      const c = await createUserWithEmailAndPassword(auth, d.email, d.password); await updateProfile(c.user, { displayName: d.name.trim() });
+      await setDoc(doc(db, "users", c.user.uid), { role: d.role, email: d.email, displayName: d.name.trim(), status: "active", createdAt: serverTimestamp() });
+      S.role = d.role; nav(); go("/dash"); route(); toast("Account created.");
+    } catch (e) { toast(e.code === "auth/email-already-in-use" ? "That email is already registered." : "Could not create account.", false); }
+  },
+  async forgot(d) { try { await sendPasswordResetEmail(auth, d.email); } catch {} toast("If that email is registered, a reset link is on its way."); },
+  async apply(d, f) {
+    if (d.proposal.trim().length < 20) return bad("Proposal must be at least 20 characters.");
+    if (!(Number(d.price) > 0)) return bad("Enter your quoted price.");
+    const id = f.dataset.id; const c = (await getDoc(doc(db, "campaigns", id))).data();
+    try { await setDoc(doc(db, "applications", `${id}_${S.uid}`), { campaignId: id, campaignTitle: c.title, brandId: c.brandId, creatorId: S.uid, creatorName: S.user.displayName || "", proposal: d.proposal.trim(), price: Number(d.price), status: "pending", createdAt: serverTimestamp(), updatedAt: serverTimestamp() }); toast("Application sent."); route(); }
+    catch { toast("Could not apply. You may have applied already.", false); }
+  },
+  async creatorProfile(d) {
+    const pf = d.portfolio.split("\n").map(s => s.trim()).filter(Boolean);
+    if (d.displayName.trim().length < 2) return bad("Enter your creator name.");
+    if (!d.youtubeUrl && !d.instagramUrl) return bad("Add a YouTube or Instagram link.");
+    for (const u of [d.photoUrl, d.youtubeUrl, d.instagramUrl, ...pf]) if (u && !isUrl(u)) return bad("Invalid link: " + u);
+    if (d.bio.length > 500) return bad("Bio must be under 500 characters.");
+    try { await setDoc(doc(db, "creatorProfiles", S.uid), { userId: S.uid, displayName: d.displayName.trim(), photoUrl: d.photoUrl, youtubeUrl: d.youtubeUrl, instagramUrl: d.instagramUrl, subscribers: +d.subscribers || 0, avgViews: +d.avgViews || 0, category: d.category, language: d.language, city: d.city, state: d.state, price: +d.price || 0, contactPref: d.contactPref, bio: d.bio, portfolio: pf, statsVerified: false, updatedAt: serverTimestamp() }, { merge: true }); toast("Profile saved."); } catch { toast("Could not save profile.", false); }
+  },
+  async brandProfile(d) {
+    if (d.name.trim().length < 2) return bad("Enter your brand name.");
+    for (const u of [d.logoUrl, d.website, d.social]) if (u && !isUrl(u)) return bad("Invalid link: " + u);
+    try { await setDoc(doc(db, "brandProfiles", S.uid), { userId: S.uid, name: d.name.trim(), logoUrl: d.logoUrl, description: d.description, website: d.website, social: d.social, contactEmail: d.contactEmail, phone: d.phone, updatedAt: serverTimestamp() }, { merge: true }); toast("Profile saved."); } catch { toast("Could not save profile.", false); }
+  },
+  async campaign(d, f) {
+    if (d.title.trim().length < 5) return bad("Title must be at least 5 characters.");
+    if (d.description.trim().length < 20) return bad("Describe the product or service (20+ characters).");
+    if (!(+d.budget > 0)) return bad("Enter a valid budget.");
+    if (!d.deadline || new Date(d.deadline) < new Date(new Date().toDateString())) return bad("Pick a deadline in the future.");
+    const data = { title: d.title.trim(), description: d.description.trim(), budget: +d.budget, category: d.category, minAudience: +d.minAudience || 0, language: d.language, location: d.location, contentType: d.contentType, deliverables: d.deliverables, deadline: d.deadline, requirements: d.requirements, updatedAt: serverTimestamp() };
+    try {
+      if (f.dataset.id) await updateDoc(doc(db, "campaigns", f.dataset.id), data);
+      else { const bp = (await getDoc(doc(db, "brandProfiles", S.uid))).data(); await addDoc(collection(db, "campaigns"), { ...data, brandId: S.uid, brandName: bp?.name || S.user.displayName || "Brand", status: "draft", createdAt: serverTimestamp() }); }
+      toast(f.dataset.id ? "Campaign updated." : "Saved as draft. Publish it when ready."); go("/dash?tab=campaigns"); route();
+    } catch { toast("Could not save campaign.", false); }
+  },
+};
+document.addEventListener("submit", async e => { const f = e.target.closest("[data-form]"); if (!f) return; e.preventDefault(); const b = f.querySelector("button"); b.disabled = true; try { await H[f.dataset.form](form(f), f); } finally { b.disabled = false; } });
+document.addEventListener("input", e => {
+  const k = e.target.dataset.f; if (!k) return;
+  if (k === "ccat") return void ($("#cclist").innerHTML = campList(e.target.value));
+  CF[k] = e.target.value; CF.n = 12; $("#clist").innerHTML = creatorList();
+});
+const A = {
+  logout: async () => { await signOut(auth); go("/"); },
+  more: () => { CF.n += 12; $("#clist").innerHTML = creatorList(); },
+  async setStatus(el) { await updateDoc(doc(db, "campaigns", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast(el.dataset.v === "active" ? "Published." : "Closed."); route(); },
+  async decide(el) {
+    const id = el.dataset.id, st = el.dataset.v, a = (await getDoc(doc(db, "applications", id))).data(), b = writeBatch(db);
+    b.update(doc(db, "applications", id), { status: st, updatedAt: serverTimestamp() });
+    if (st === "accepted") b.set(doc(db, "collaborations", id), { applicationId: id, campaignId: a.campaignId, campaignTitle: a.campaignTitle, brandId: S.uid, creatorId: a.creatorId, creatorName: a.creatorName, agreedPrice: a.price, contentUrl: "", status: "in_progress", paymentNote: "Payment handled outside the platform", createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+    await b.commit(); toast(st === "accepted" ? "Accepted. A collaboration was created." : "Rejected."); route();
+  },
+  async submitContent(el) { const v = $("#cu-" + el.dataset.id).value.trim(); if (!isUrl(v)) return void toast("Enter a valid published content URL.", false); await updateDoc(doc(db, "collaborations", el.dataset.id), { contentUrl: v, status: "submitted", updatedAt: serverTimestamp() }); toast("Submitted for brand review."); route(); },
+  async collab(el) { await updateDoc(doc(db, "collaborations", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast("Updated."); route(); },
+  async report(el) { const r = prompt("Why are you reporting this campaign?"); if (!r?.trim()) return; await addDoc(collection(db, "reports"), { reporterId: S.uid, targetType: "campaign", targetId: el.dataset.id, reason: r.trim().slice(0, 500), status: "open", createdAt: serverTimestamp() }); toast("Report sent to admins."); },
+  async admin(el) { const { c, id, v, del } = el.dataset; if (del) { if (!confirm("Delete this permanently?")) return; await deleteDoc(doc(db, c, id)); } else await updateDoc(doc(db, c, id), { status: v }); toast("Done."); route(); },
+};
+document.addEventListener("click", async e => { const el = e.target.closest("[data-act]"); if (!el) return; try { await A[el.dataset.act](el); } catch { toast("Action failed. Please try again.", false); } });
+</script>
+</body>
+</html>
