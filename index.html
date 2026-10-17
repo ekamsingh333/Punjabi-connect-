@@ -17,8 +17,30 @@
  .card{@apply rounded-xl border border-black/10 bg-white p-5}
  .lnk{@apply text-indigo underline underline-offset-2 hover:text-saffron}
 }
-.phulkari{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/14px 14px;height:10px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html{scroll-behavior:smooth}
+.phulkari{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/14px 14px;height:10px;animation:drift 5s linear infinite}
+.pat{background:conic-gradient(from 45deg at 50% 50%,#D9780A 0 25%,#2B2F77 0 50%,#D9780A 0 75%,#2B2F77 0) 0 0/36px 36px;opacity:.08;animation:drift2 40s linear infinite;-webkit-mask-image:radial-gradient(ellipse at 75% 35%,#000 0,transparent 65%);mask-image:radial-gradient(ellipse at 75% 35%,#000 0,transparent 65%)}
+@keyframes drift{to{background-position:14px 0}}
+@keyframes drift2{to{background-position:36px 36px}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-10px) rotate(-1.5deg)}}
+@keyframes float2{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(8px) rotate(1.5deg)}}
+@keyframes shimmer{to{background-position:-200% 0}}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+#app>*{animation:fade .35s ease both}
+.hero-in{animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0ms)}
+.float{animation:float 6s ease-in-out infinite}.float2{animation:float2 7s ease-in-out infinite}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+.hov{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.hov:hover{transform:translateY(-4px);box-shadow:0 14px 28px -14px rgba(43,47,119,.4);border-color:#D9780A}
+.btn,.btn2{transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
+.btn:hover{box-shadow:0 8px 18px -8px rgba(43,47,119,.6);transform:translateY(-1px)}.btn:active,.btn2:active{transform:scale(.96)}
+.sk{background:linear-gradient(90deg,#eceef2 25%,#f8f9fb 50%,#eceef2 75%);background-size:200% 100%;animation:shimmer 1.3s linear infinite}
+.toast-in{animation:toastIn .3s cubic-bezier(.2,.7,.2,1)}
+a,button{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid #D9780A;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body class="bg-white font-sans text-ink antialiased">
@@ -57,10 +79,10 @@ const TYPES = ["YouTube video","YouTube Short","Instagram Reel","Instagram post"
 function toast(msg, ok = true) {
   const d = document.createElement("div");
   d.setAttribute("role", "status");
-  d.className = `rounded-lg px-4 py-2 text-sm text-white shadow ${ok ? "bg-leaf" : "bg-red-600"}`;
+  d.className = `toast-in rounded-lg px-4 py-2 text-sm text-white shadow-lg ${ok ? "bg-leaf" : "bg-red-600"}`;
   d.textContent = msg; $("#toasts").append(d); setTimeout(() => d.remove(), 3500);
 }
-const spin = () => `<div class="flex justify-center py-16"><div class="h-6 w-6 animate-spin rounded-full border-2 border-saffron border-t-transparent"></div></div>`;
+const spin = () => `<div class="mx-auto max-w-6xl px-4 py-10"><div class="sk h-8 w-56 rounded-lg"></div><div class="sk mt-3 h-4 w-80 max-w-full rounded"></div><div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">${[1,2,3].map(() => '<div class="sk h-32 rounded-xl"></div>').join("")}</div></div>`;
 const empty = t => `<div class="card text-center text-sm text-ink/60">${t}</div>`;
 const wrap = (h, w = "max-w-6xl") => `<div class="mx-auto ${w} px-4 py-10">${h}</div>`;
 const badge = s => { const c = { pending: "bg-amber-100 text-amber-800", accepted: "bg-leaf/10 text-leaf", completed: "bg-leaf/10 text-leaf", rejected: "bg-red-50 text-red-600", suspended: "bg-red-50 text-red-600" }[s] || "bg-black/5"; return `<span class="rounded-full px-2 py-0.5 text-xs ${c}">${E(String(s).replace("_", " "))}</span>`; };
@@ -85,7 +107,7 @@ function nav() {
   $("#nav").innerHTML = `<div class="phulkari"></div><nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
    <a href="#/" class="font-display text-lg font-bold">Punjabi<span class="text-saffron">Connect</span></a>
    <div class="hidden gap-6 md:flex"><a class="${l}" href="#/creators">Explore Creators</a><a class="${l}" href="#/campaigns">Brand Campaigns</a><a class="${l}" href="#/how">How It Works</a></div>
-   <div class="flex items-center gap-2">${S.user ? `<a class="${l}" href="#/dash">Dashboard</a><button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`}</div></nav>
+   <div class="flex items-center gap-2">${S.user ? `<a class="${l}" href="#/dash">Dashboard</a>${S.admin ? `<a class="${l} font-medium !text-saffron" href="#/admin">Admin</a>` : ""}<button class="btn2" data-act="logout">Logout</button>` : `<a class="${l}" href="#/login">Login</a><a class="btn" href="#/signup">Sign Up</a>`}</div></nav>
    <div class="flex justify-center gap-5 border-t border-black/5 py-1.5 text-xs md:hidden"><a href="#/creators">Creators</a><a href="#/campaigns">Campaigns</a><a href="#/how">How it works</a></div>`;
 }
 
@@ -97,28 +119,35 @@ R["/"] = async () => {
   let cr = [], ca = [];
   try { cr = (await rows("creatorProfiles")).sort((a, b) => b.subscribers - a.subscribers).slice(0, 3); ca = (await rows("campaigns", where("status", "==", "active"))).slice(0, 3); } catch {}
   return wrap(`
-  <section class="grid items-center gap-8 py-12 md:grid-cols-5"><div class="md:col-span-3">
-    <h1 class="font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">Where Punjabi Creators Meet Great Brands</h1>
-    <p class="mt-4 max-w-lg text-ink/70">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
-    <div class="mt-7 flex flex-wrap gap-3"><a class="btn" href="#/signup?role=creator">Join as Creator</a><a class="btn2" href="#/signup?role=brand">Join as Brand</a></div></div>
-    <div class="md:col-span-2"><div class="phulkari rounded-t-xl" style="height:18px"></div><div class="card rounded-t-none"><p class="font-medium">A simple path to a paid collaboration</p><p class="mt-2 text-sm text-ink/70">Brand posts a brief, creator sends a proposal and price, brand accepts, creator submits the published link.</p></div></div></section>
-  <section class="mt-6"><h2 class="font-display text-2xl">Featured Punjabi Creators</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
-  <section class="mt-12"><h2 class="font-display text-2xl">Latest Brand Campaigns</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
-  <section class="mt-12"><h2 class="font-display text-2xl">How it works</h2><div class="mt-4">${howHtml}</div></section>
-  <section class="mt-12 grid gap-4 md:grid-cols-2"><div class="card"><h3 class="font-medium">For creators</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div class="card"><h3 class="font-medium">For brands</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></section>
-  <section class="mt-12"><h2 class="font-display text-2xl">Testimonials</h2><div class="card mt-4 text-sm text-ink/60">Demo content: real testimonials will appear here after launch. <i>“Sample quote for layout only.” (Demo)</i></div></section>`);
+  <section class="relative isolate grid items-center gap-10 py-10 md:grid-cols-5 md:py-16">
+    <div class="pat absolute inset-x-0 -top-6 -z-10 h-[125%]"></div>
+    <div class="md:col-span-3">
+      <h1 class="hero-in font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-6xl" style="--d:0ms">Where Punjabi Creators Meet Great Brands</h1>
+      <p class="hero-in mt-5 max-w-lg text-lg text-ink/70" style="--d:120ms">Punjabi Connect links Punjabi YouTubers and Instagram creators with businesses looking for real collaborations. Create a profile, post a campaign, or apply in minutes.</p>
+      <div class="hero-in mt-8 flex flex-wrap gap-3" style="--d:240ms"><a class="btn !px-6 !py-3" href="#/signup?role=creator">Join as Creator</a><a class="btn2 !px-6 !py-3" href="#/signup?role=brand">Join as Brand</a></div>
+    </div>
+    <div class="hero-in relative h-72 md:col-span-2" style="--d:380ms">
+      <div class="float card absolute right-0 top-0 w-60 shadow-xl"><div class="flex items-center gap-3"><div class="h-10 w-10 rounded-full bg-saffron/25"></div><div><p class="text-sm font-medium">Sample Creator</p><p class="text-xs text-ink/60">Comedy, Punjabi</p></div></div><p class="mt-3 text-xs text-ink/60">Preview only. Real creators appear after they join.</p></div>
+      <div class="float2 card absolute bottom-4 left-0 w-64 shadow-xl"><p class="text-xs text-ink/60">Sample campaign</p><p class="text-sm font-medium">Reel for a new snack</p><p class="mt-1 text-sm text-indigo">₹20,000</p></div>
+    </div>
+  </section>
+  <section class="rv mt-6"><h2 class="font-display text-2xl">Featured Punjabi Creators</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${cr.length ? cr.map(creatorCard).join("") : `<div class="md:col-span-3">${empty("No creators yet. Be the first to join.")}</div>`}</div></section>
+  <section class="rv mt-12"><h2 class="font-display text-2xl">Latest Brand Campaigns</h2><div class="mt-4 grid gap-4 md:grid-cols-3">${ca.length ? ca.map(campCard).join("") : `<div class="md:col-span-3">${empty("No active campaigns yet.")}</div>`}</div></section>
+  <section class="rv mt-12"><h2 class="font-display text-2xl">How it works</h2><div class="mt-4">${howHtml}</div></section>
+  <section class="rv mt-12 grid gap-4 md:grid-cols-2"><div class="card"><h3 class="font-medium">For creators</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Get found by brands looking for Punjabi audiences</li><li>Choose campaigns that fit your niche and price</li><li>Track every application in one place</li></ul></div><div class="card"><h3 class="font-medium">For brands</h3><ul class="mt-2 list-disc pl-5 text-sm text-ink/70"><li>Reach Punjabi creators by category, language and location</li><li>Review proposals and quotes side by side</li><li>Approve content links before you close the work</li></ul></div></section>
+  <section class="rv mt-12"><h2 class="font-display text-2xl">Testimonials</h2><div class="card mt-4 text-sm text-ink/60">Demo content: real testimonials will appear here after launch. <i>“Sample quote for layout only.” (Demo)</i></div></section>`);
 };
 R["/how"] = async () => wrap(`<h1 class="font-display text-3xl">How It Works</h1><div class="mt-6">${howHtml}</div>`);
 for (const [k, t, b] of [["about", "About", "Punjabi Connect connects Punjabi creators with brands. Payments are currently handled outside the platform."], ["contact", "Contact", "Add your contact email or phone here."], ["privacy", "Privacy Policy", "Draft placeholder. Have a lawyer write the final policy before launch. We never show private emails publicly."], ["terms", "Terms", "Draft placeholder. Have a lawyer write final terms before launch."]])
   R["/" + k] = async () => wrap(`<h1 class="font-display text-3xl">${t}</h1><p class="mt-3 text-ink/70">${b}</p>`, "max-w-2xl");
 
 function creatorCard(r) {
-  return `<a href="#/creator?id=${E(r.id)}" class="card block hover:border-saffron"><div class="flex items-center gap-3">${r.photoUrl && isUrl(r.photoUrl) ? `<img src="${href(r.photoUrl)}" alt="" class="h-12 w-12 rounded-full object-cover">` : `<div class="h-12 w-12 rounded-full bg-saffron/20"></div>`}
+  return `<a href="#/creator?id=${E(r.id)}" class="card hov block"><div class="flex items-center gap-3">${r.photoUrl && isUrl(r.photoUrl) ? `<img src="${href(r.photoUrl)}" alt="" class="h-12 w-12 rounded-full object-cover">` : `<div class="h-12 w-12 rounded-full bg-saffron/20"></div>`}
   <div><p class="font-medium">${E(r.displayName)}${r.isDemo ? ' <span class="text-xs text-amber-700">DEMO</span>' : ""}</p><p class="text-xs text-ink/60">${E(r.category)}, ${E(r.language)}, ${E(r.city)} ${E(r.state)}</p></div></div>
   <p class="mt-3 text-sm">${Number(r.subscribers || 0).toLocaleString("en-IN")} audience, ${Number(r.avgViews || 0).toLocaleString("en-IN")} avg views</p><p class="text-sm text-ink/70">From ${money(r.price)} (indicative)</p></a>`;
 }
 function campCard(c) {
-  return `<a href="#/campaign?id=${E(c.id)}" class="card block hover:border-saffron"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="font-medium">${E(c.title)}</h3>
+  return `<a href="#/campaign?id=${E(c.id)}" class="card hov block"><p class="text-xs text-ink/60">${E(c.brandName)}${c.isDemo ? ' <span class="text-amber-700">DEMO</span>' : ""}</p><h3 class="font-medium">${E(c.title)}</h3>
   <p class="mt-2 text-sm">${money(c.budget)}, ${E(c.contentType)}</p><p class="text-sm text-ink/60">${E(c.category)}, ${E(c.location)}. Apply by ${E(c.deadline)}</p></a>`;
 }
 
@@ -234,13 +263,20 @@ R["/admin"] = async q => {
   return wrap(`<h1 class="font-display mb-4 text-2xl">Admin dashboard</h1>${tabs("/admin", T, t)}${b}`, "max-w-5xl");
 };
 
+/* ---------- motion helpers ---------- */
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 }) : null;
+function fx(root = document) {
+  root.querySelectorAll(".grid").forEach(g => [...g.children].filter(c => c.matches(".card,a") && !c.dataset.fx).forEach((c, i) => { c.dataset.fx = 1; c.style.animation = `rise .55s cubic-bezier(.2,.7,.2,1) ${Math.min(i, 8) * 70}ms both`; }));
+  root.querySelectorAll(".rv:not(.in)").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+}
+
 /* ---------- router ---------- */
 const go = p => { location.hash = "#" + p; return null; };
 async function route() {
   if (!S.ready) { $("#app").innerHTML = spin(); return; }
   const [path, qs] = (location.hash.slice(1) || "/").split("?"); const q = new URLSearchParams(qs || "");
   $("#app").innerHTML = spin();
-  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); } } catch (e) { $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
+  try { const h = await (R[path] || (async () => wrap(empty("Page not found."), "max-w-xl")))(q); if (h !== null) { $("#app").innerHTML = h; window.scrollTo(0, 0); fx($("#app")); } } catch (e) { $("#app").innerHTML = wrap(empty("Something went wrong. Please refresh.")); }
 }
 addEventListener("hashchange", route);
 onAuthStateChanged(auth, async u => {
@@ -304,12 +340,12 @@ const H = {
 document.addEventListener("submit", async e => { const f = e.target.closest("[data-form]"); if (!f) return; e.preventDefault(); const b = f.querySelector("button"); b.disabled = true; try { await H[f.dataset.form](form(f), f); } finally { b.disabled = false; } });
 document.addEventListener("input", e => {
   const k = e.target.dataset.f; if (!k) return;
-  if (k === "ccat") return void ($("#cclist").innerHTML = campList(e.target.value));
-  CF[k] = e.target.value; CF.n = 12; $("#clist").innerHTML = creatorList();
+  if (k === "ccat") { $("#cclist").innerHTML = campList(e.target.value); fx($("#cclist")); return; }
+  CF[k] = e.target.value; CF.n = 12; $("#clist").innerHTML = creatorList(); fx($("#clist"));
 });
 const A = {
   logout: async () => { await signOut(auth); go("/"); },
-  more: () => { CF.n += 12; $("#clist").innerHTML = creatorList(); },
+  more: () => { CF.n += 12; $("#clist").innerHTML = creatorList(); fx($("#clist")); },
   async setStatus(el) { await updateDoc(doc(db, "campaigns", el.dataset.id), { status: el.dataset.v, updatedAt: serverTimestamp() }); toast(el.dataset.v === "active" ? "Published." : "Closed."); route(); },
   async decide(el) {
     const id = el.dataset.id, st = el.dataset.v, a = (await getDoc(doc(db, "applications", id))).data(), b = writeBatch(db);
